@@ -7,7 +7,7 @@ export default function Home() {
 
   useEffect(() => {
     fetch(
-      "https://sheets.googleapis.com/v4/spreadsheets/1qUr2GP5eJJ7hrvpm2NeUb1gIav00DuQrsszfq-2LglY/values/alumni!B1:B2?key=AIzaSyBtR10AxMXSIs7Ymk3P0N87fV5CWuc-gEU"
+      "https://mocha.api.meaookung144.xyz/alumni"
     )
       .then((response) => response.json())
       .then((data) => {
