@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Thai } from "next/font/google"; // Ensure correct import path
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,17 +18,17 @@ export default function RootLayout({
         className={`antialiased overflow-x-hidden bg-[#204297]`}
       >
         <div className="fixed top-4 lg:top-6 left-1/2 -translate-x-1/2 z-50 text-white w-[calc(100vw-24px-24px)] max-w-[1200px] h-[80px] px-6 py-4 flex justify-between items-center bg-black/40 border-2 border-white/10 rounded-xl backdrop-blur-sm">
-          <a href="/" className="flex place-items-center">
+          <Link href="/" className="flex place-items-center">
             <img src="/img/alumni.png" alt="สมาคมศิษย์เก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์" className="h-12" />
             <p className="text-lg pl-5">สมาคมศิษย์เก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์</p>
-          </a>
+          </Link>
           <div className="hidden lg:flex space-x-8 items-center">
-            <a
+            <Link
               className="xl:text-lg px-6 py-2 bg-gradient-to-bl from-yellow-600 to-yellow-400 font-bold rounded-lg glowing-box transition hover:scale-95"
               href="/#howtodonate"
             >
               บริจาค
-            </a>
+            </Link>
           </div>
         </div>
         <div className="mb-28"></div>
