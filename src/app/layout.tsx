@@ -25,7 +25,7 @@ export default function RootLayout({
           <div className="hidden lg:flex space-x-8 items-center">
             <a
               className="xl:text-lg px-6 py-2 bg-gradient-to-bl from-yellow-600 to-yellow-400 font-bold rounded-lg glowing-box transition hover:scale-95"
-              href="/login?continue=%2Fprofile"
+              href="/#howtodonate"
             >
               บริจาค
             </a>
@@ -33,7 +33,7 @@ export default function RootLayout({
         </div>
         <div className="mb-28"></div>
         <div className="text-white m-4 mx-2 lg:mx-15">{children}</div>
-        <div className="bg-gradient-to-r from-[#fde895] from-10% to-[#7c4087] to-90%">
+        <div className="bg-gradient-to-r from-[#fde895] from-10% lg:to-[#7c4087] to-[#fde895] to-90%">
           <div className="py-4 px-8 w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-center md:items-start gap-y-4 gap-x-6">
             <img alt="Hello :)" loading="lazy" width="130" decoding="async" data-nimg="1" className="h-20 self-center rounded-xl" style={{ color: "transparent", height: "auto" }} src="/img/alumni.png"/>
             <div className="flex flex-col w-fit max-w-lg gap-3 items-center md:items-start">
