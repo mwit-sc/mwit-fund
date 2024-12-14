@@ -7,7 +7,7 @@ export default function Home() {
 
   useEffect(() => {
     fetch(
-      "https://mocha.api.meaookung144.xyz/alumni"
+      "https://mocha-api.meaookung144.xyz/alumni"
     )
       .then((response) => response.json())
       .then((data) => {
