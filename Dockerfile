@@ -1,50 +1,52 @@
-# Use the official Node.js image as the base image
-FROM node:18-alpine AS base
+# Stage 1: Install dependencies
+FROM node:18-alpine AS deps
 
 # Set environment variables
-ENV USEDOCKER=true \
-    NODE_ENV=production \
-    NEXT_TELEMETRY_DISABLED=1 \
-    PORT=3000
-
-# Set working directory
+ENV NODE_ENV=development
 WORKDIR /app
 
-# Install dependencies
-FROM base AS deps
+# Install build dependencies
+RUN apk add --no-cache bash curl git
 
-# Copy dependency-related files
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+# Copy dependency files for caching
+COPY package.json package-lock.json* yarn.lock* ./
 
-# Install production and development dependencies
-RUN npm ci --include=dev --legacy-peer-deps
+# Install only necessary dependencies
+RUN npm ci --legacy-peer-deps
 
-# Build the application
-FROM base AS builder
+# Stage 2: Build the application
+FROM node:18-alpine AS builder
 
+ENV NODE_ENV=production
+WORKDIR /app
+
+# Copy dependencies from the previous stage
 COPY --from=deps /app/node_modules ./node_modules
-COPY . . 
 
-# Build Next.js application
+# Copy application source code
+COPY . .
+
+# Build the Next.js application
 RUN npm run build
 
-# Create production image
-FROM base AS runner
+# Stage 3: Create the production image
+FROM node:18-alpine AS runner
 
-# Copy only what's needed for runtime
+ENV NODE_ENV=production
+WORKDIR /app
+
+# Copy built files from the builder stage
 COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 
-# Create and configure a non-root user
-RUN addgroup -S nodejs && \
-    adduser -S nextjs -G nodejs && \
-    mkdir -p .next && chown -R nextjs:nodejs /app
+# Install only production dependencies
+RUN npm install --production --legacy-peer-deps
 
-# Set user permissions and expose port
-USER nextjs
+# Set up a non-root user for security
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+# Expose port and run the application
 EXPOSE 3000
-
-# Start the application
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
