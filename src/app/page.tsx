@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { IBM_Plex_Sans_Thai } from 'next/font/google'
+ 
+const ibmPlexSansThai = IBM_Plex_Sans_Thai({ subsets: ['thai', 'latin'], weight: ['100','200','300','400','500','600','700'] });
 
 export default function Home() {
   const [data, setData] = useState({ donation: "Loading...", donors: "Loading..." });
@@ -25,7 +28,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen ${ibmPlexSansThai.className}`}>
       <div className="max-w-7xl mx-auto lg:py-5 px-5">
         {/* Header Section */}
         <div className="text-center mb-4 lg:mb-16 lg:mt-12">
