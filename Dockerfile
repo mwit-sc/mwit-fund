@@ -28,7 +28,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 
 
-COPY next.config.ts tsconfig.json ./
+COPY next.config.mjs tsconfig.json ./
 COPY tailwind.config.ts ./
 
 # Build the application using Node.js
@@ -62,7 +62,6 @@ USER nextjs
 EXPOSE 3000
 
 ENV PORT=3000
-ENV AUTH_URL=https://tiny.mwit.link
 
 RUN ls -l /app
 
