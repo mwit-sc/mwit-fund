@@ -1,4 +1,3 @@
-// app/donate/page.tsx
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
@@ -21,9 +20,15 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export default function DonatePage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [donationData, setDonationData] = useState({
-    name: '',
-    email: '',
+    donorName: '',
+    generation: '',
     amount: '',
+    receiptName: '',
+    email: '',
+    taxId: '',
+    address: '',
+    contactInfo: '',
+    publicationConsent: 'full', // 'full', 'name_only', 'anonymous'
     slip: null
   });
   const [slipPreview, setSlipPreview] = useState(null);
@@ -68,6 +73,11 @@ export default function DonatePage() {
     setDonationData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleRadioChange = (e) => {
+    const { value } = e.target;
+    setDonationData(prev => ({ ...prev, publicationConsent: value }));
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -88,9 +98,9 @@ export default function DonatePage() {
     setSubmitError(null);
     
     try {
-      // Validate data
-      if (!donationData.name || !donationData.email || !donationData.amount || !donationData.slip) {
-        throw new Error('กรุณากรอกข้อมูลให้ครบถ้วน');
+      // Validate required data
+      if (!donationData.donorName || !donationData.generation || !donationData.contactInfo || !donationData.slip) {
+        throw new Error('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน (ช่องที่มีเครื่องหมาย *)');
       }
       
       // Upload slip image to Supabase Storage
@@ -98,14 +108,14 @@ export default function DonatePage() {
       const fileName = `${Date.now()}.${fileExt}`;
       
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('donationslips')
+        .from('donation_slips')
         .upload(fileName, donationData.slip);
         
       if (uploadError) throw uploadError;
       
       // Get public URL
       const { data: publicUrlData } = supabase.storage
-        .from('donationslips')
+        .from('donation_slips')
         .getPublicUrl(fileName);
         
       const slipUrl = publicUrlData.publicUrl;
@@ -115,9 +125,15 @@ export default function DonatePage() {
         .from('donations')
         .insert([
           {
-            donor_name: donationData.name,
+            donor_name: donationData.donorName,
+            generation: donationData.generation,
+            amount: parseFloat(donationData.amount) || 0,
+            receipt_name: donationData.receiptName,
             donor_email: donationData.email,
-            amount: parseFloat(donationData.amount),
+            tax_id: donationData.taxId,
+            address: donationData.address,
+            contact_info: donationData.contactInfo,
+            publication_consent: donationData.publicationConsent,
             slip_image_url: slipUrl,
             status: 'pending'
           }
@@ -131,9 +147,15 @@ export default function DonatePage() {
       
       // Reset form
       setDonationData({
-        name: '',
-        email: '',
+        donorName: '',
+        generation: '',
         amount: '',
+        receiptName: '',
+        email: '',
+        taxId: '',
+        address: '',
+        contactInfo: '',
+        publicationConsent: 'full',
         slip: null
       });
       setSlipPreview(null);
@@ -247,12 +269,14 @@ export default function DonatePage() {
             
             <form className="space-y-6">
               <div>
-                <label htmlFor="name" className="block mb-2 font-medium">ชื่อ-นามสกุล</label>
+                <label htmlFor="donorName" className="block mb-2 font-medium">
+                  ชื่อ-สกุลผู้บริจาคภาษาไทย <span className="text-yellow-400">*</span>
+                </label>
                 <input 
                   type="text" 
-                  id="name" 
-                  name="name"
-                  value={donationData.name}
+                  id="donorName" 
+                  name="donorName"
+                  value={donationData.donorName}
                   onChange={handleChange}
                   className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="กรอกชื่อ-นามสกุล" 
@@ -261,21 +285,25 @@ export default function DonatePage() {
               </div>
               
               <div>
-                <label htmlFor="email" className="block mb-2 font-medium">อีเมล</label>
+                <label htmlFor="generation" className="block mb-2 font-medium">
+                  รุ่น <span className="text-yellow-400">*</span>
+                </label>
                 <input 
-                  type="email" 
-                  id="email" 
-                  name="email"
-                  value={donationData.email}
+                  type="text" 
+                  id="generation" 
+                  name="generation"
+                  value={donationData.generation}
                   onChange={handleChange}
                   className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
-                  placeholder="กรอกอีเมล" 
+                  placeholder="เช่น รุ่น 1, รุ่น 15" 
                   required
                 />
               </div>
               
               <div>
-                <label htmlFor="amount" className="block mb-2 font-medium">จำนวนเงินบริจาค (บาท)</label>
+                <label htmlFor="amount" className="block mb-2 font-medium">
+                  จำนวนเงิน (บาท)
+                </label>
                 <input 
                   type="number" 
                   id="amount" 
@@ -285,8 +313,135 @@ export default function DonatePage() {
                   className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="ระบุจำนวนเงิน" 
                   min="1"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="receiptName" className="block mb-2 font-medium">
+                  ประสงค์ให้ออกใบเสร็จในนาม (ชื่อ-สกุล, บริษัท)
+                </label>
+                <input 
+                  type="text" 
+                  id="receiptName" 
+                  name="receiptName"
+                  value={donationData.receiptName}
+                  onChange={handleChange}
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  placeholder="กรอกชื่อที่ต้องการให้ปรากฏในใบเสร็จ" 
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="email" className="block mb-2 font-medium">
+                  Email
+                </label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email"
+                  value={donationData.email}
+                  onChange={handleChange}
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  placeholder="กรอกอีเมล" 
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="taxId" className="block mb-2 font-medium">
+                  เลขประจำตัวผู้เสียภาษี (กรณีโอนเงินผ่านบัญชีโรงเรียน)
+                </label>
+                <input 
+                  type="text" 
+                  id="taxId" 
+                  name="taxId"
+                  value={donationData.taxId}
+                  onChange={handleChange}
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  placeholder="กรอกเลขประจำตัวผู้เสียภาษี" 
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="address" className="block mb-2 font-medium">
+                  ที่อยู่ในการส่งเอกสาร
+                </label>
+                <textarea 
+                  id="address" 
+                  name="address"
+                  value={donationData.address}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  placeholder="กรอกที่อยู่สำหรับจัดส่งเอกสาร" 
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="contactInfo" className="block mb-2 font-medium">
+                  Line ID หรือเบอร์โทรติดต่อกลับ <span className="text-yellow-400">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="contactInfo" 
+                  name="contactInfo"
+                  value={donationData.contactInfo}
+                  onChange={handleChange}
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  placeholder="กรอก Line ID หรือเบอร์โทรศัพท์" 
                   required
                 />
+              </div>
+              
+              <div>
+                <label className="block mb-2 font-medium">
+                  การอนุญาตออกนาม <span className="text-yellow-400">*</span>
+                </label>
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="consentFull" 
+                      name="publicationConsent"
+                      value="full"
+                      checked={donationData.publicationConsent === 'full'}
+                      onChange={handleRadioChange}
+                      className="mr-2"
+                    />
+                    <label htmlFor="consentFull">
+                      อนุญาตให้โรงเรียนประกาศชื่อผู้บริจาคและจำนวนเงินทางสื่อออนไลน์ได้
+                    </label>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="consentNameOnly" 
+                      name="publicationConsent"
+                      value="name_only"
+                      checked={donationData.publicationConsent === 'name_only'}
+                      onChange={handleRadioChange}
+                      className="mr-2"
+                    />
+                    <label htmlFor="consentNameOnly">
+                      อนุญาตให้โรงเรียนประกาศชื่อผู้บริจาคทางสื่อออนไลน์ได้ (โดยไม่ประกาศยอดเงิน)
+                    </label>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="consentAnonymous" 
+                      name="publicationConsent"
+                      value="anonymous"
+                      checked={donationData.publicationConsent === 'anonymous'}
+                      onChange={handleRadioChange}
+                      className="mr-2"
+                    />
+                    <label htmlFor="consentAnonymous">
+                      ไม่ประสงค์ออกนาม
+                    </label>
+                  </div>
+                </div>
               </div>
               
               <div className="pt-4">
@@ -317,21 +472,22 @@ export default function DonatePage() {
                 <p className="font-bold text-yellow-400">บัญชีโรงเรียนมหิดลวิทยานุสรณ์</p>
                 <p>ธนาคารกรุงไทย</p>
                 <p>เลขที่บัญชี 459-0-47124-8</p>
-                <div className="mb-6">
-                <p className="mb-4">หรือ สแกน QR Code เพื่อบริจาคเข้าระบบ E-DONATION</p>
-                <div className="flex justify-center">
-                  <img src="/img/qr-school.png" alt="QR Code" className="h-64 bg-white p-2 rounded-lg"/>
-                </div>
-                <p className="text-center mt-2 text-sm">กองบุญ : 09940000521472001</p>
-              </div>
               </div>
             </div>
             
-            
+            <div className="mb-6">
+              <p className="mb-4">หรือ สแกน QR Code เพื่อบริจาคเข้าระบบ E-DONATION</p>
+              <div className="flex justify-center">
+                <img src="/img/qr-school.png" alt="QR Code" className="h-64 bg-white p-2 rounded-lg"/>
+              </div>
+              <p className="text-center mt-2 text-sm">กองบุญ : 09940000521472001</p>
+            </div>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="mt-6">
-                <label className="block mb-2 font-medium">อัพโหลดสลิปการโอนเงิน</label>
+                <label className="block mb-2 font-medium">
+                  หลักฐานการโอนเงิน (รูปภาพ) <span className="text-yellow-400">*</span>
+                </label>
                 <input 
                   type="file"
                   ref={fileInputRef}
@@ -417,7 +573,7 @@ export default function DonatePage() {
             
             <h2 className="text-3xl font-bold mb-4">ขอบคุณสำหรับการบริจาค</h2>
             <p className="text-lg mb-8">
-              การบริจาคของท่านได้รับการบันทึกเรียบร้อยแล้ว เจ้าหน้าที่จะตรวจสอบและส่งเอกสารรับรองการบริจาคให้ท่านทางอีเมลภายใน 7 วันทำการ
+              การบริจาคของท่านได้รับการบันทึกเรียบร้อยแล้ว เจ้าหน้าที่จะตรวจสอบและส่งเอกสารรับรองการบริจาคให้ท่านตามที่อยู่ที่ได้ระบุไว้
             </p>
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">

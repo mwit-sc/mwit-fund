@@ -37,7 +37,7 @@ export default function Home() {
           }}
         />
         
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white px-4 text-center">
+        <div className="relative z-10 flex flex-col items-center justify-center p-5 text-white px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -85,17 +85,16 @@ export default function Home() {
               </div>
             </Link>
           </motion.div>
-        </div>
-        
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-          >
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </motion.div>
+          <div className="pt-8 bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -115,7 +114,7 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <img 
-                src="/img/alumni-group.jpg" 
+                src="/img/mob.png" 
                 alt="MWIT Alumni Group" 
                 className="rounded-lg shadow-xl w-full object-cover h-[400px]" 
               />
