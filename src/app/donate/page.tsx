@@ -108,14 +108,14 @@ export default function DonatePage() {
       const fileName = `${Date.now()}.${fileExt}`;
       
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('donation_slips')
+        .from('donationslips')
         .upload(fileName, donationData.slip);
         
       if (uploadError) throw uploadError;
       
       // Get public URL
       const { data: publicUrlData } = supabase.storage
-        .from('donation_slips')
+        .from('donationslips')
         .getPublicUrl(fileName);
         
       const slipUrl = publicUrlData.publicUrl;
