@@ -1,5 +1,5 @@
 {
-  "name": "mwit-funds",
+  "name": "mwit-alumni",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,18 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^15.1.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@supabase/supabase-js": "^2.38.4",
+    "framer-motion": "^10.16.4",
+    "next": "^15.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.2",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.1",
-    "eslint": "^9.17.0",
-    "eslint-config-next": "^15.1.2",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.17",
-    "typescript": "^5"
+    "@types/node": "^20.4.8",
+    "@types/react": "^18.2.18",
+    "@types/react-dom": "^18.2.7",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.46.0",
+    "eslint-config-next": "^15.0.4",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6"
   }
 }

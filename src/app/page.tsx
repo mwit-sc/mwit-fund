@@ -1,155 +1,363 @@
 "use client";
 
 import Link from "next/link";
+import { IBM_Plex_Sans_Thai } from 'next/font/google';
 import { useEffect, useState } from "react";
-import { IBM_Plex_Sans_Thai } from 'next/font/google'
- 
-const ibmPlexSansThai = IBM_Plex_Sans_Thai({ subsets: ['thai', 'latin'], weight: ['100','200','300','400','500','600','700'], display: 'swap' });
+import { motion } from 'framer-motion';
+
+const ibmPlexSansThai = IBM_Plex_Sans_Thai({ 
+  subsets: ['thai', 'latin'], 
+  weight: ['100','200','300','400','500','600','700'], 
+  display: 'swap' 
+});
 
 export default function Home() {
-  const [data, setData] = useState({ donation: "Loading...", donors: "Loading..." });
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    fetch(
-      "https://mocha-api.meaookung144.xyz/alumni"
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const values = data.values || [];
-        setData({
-          donation: values[0]?.[0] ? `${values[0][0]} บาท` : "Data not available",
-          donors: values[1]?.[0] ? `${values[1][0]} คน` : "Data not available",
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setData({ donation: "Error", donors: "Error" });
-      });
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <div className={`min-h-screen ${ibmPlexSansThai.className}`}>
-      <div className="max-w-7xl mx-auto lg:py-5 px-5">
-        {/* Header Section */}
-        <div className="text-center mb-4 lg:mb-16 lg:mt-12">
-          <h1 className="text-3xl md:text-5xl font-bold">กองทุนแบ่งสรรปันน้อง</h1>
-          <p className="mt-4 text-md lg:text-xl font-medium">
-            ร่วมส่งต่อโอกาสดีๆ ที่เราได้รับ ผ่านการบริจาค
-          </p>
-          <Link href="#howtodonate">
-            <div className="mt-5 mb-4 inline-block bg-yellow-400 text-teal-900 px-8 py-4 rounded-full font-semibold text-xl lg:text-3xl">
-              บริจาคตอนนี้ เพียง 3 ขั้นตอน
-            </div>
-          </Link>
-          <p className="mt-2 text-md lg:text-xl">
-            การบริจาคของคุณสามารถลดหย่อนภาษีได้ 2 เท่า
-          </p>
+    <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] ${ibmPlexSansThai.className}`}>
+      {/* Hero Section */}
+      <div className="relative h-screen">
+        <div 
+          className="absolute inset-0 bg-cover bg-center z-0" 
+          style={{ 
+            backgroundImage: "url('/img/mwit-building.jpg')", 
+            opacity: 0.4 
+          }}
+        />
+        
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <img 
+              src="/img/alumni.png" 
+              alt="MWIT Alumni Logo" 
+              className="rounded w-32 h-32 md:w-40 md:h-40 mb-6" 
+            />
+          </motion.div>
+          
+          <motion.h1 
+            className="text-4xl md:text-6xl font-bold mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            สมาคมศิษย์เก่า<br/>โรงเรียนมหิดลวิทยานุสรณ์
+          </motion.h1>
+          
+          <motion.p 
+            className="text-xl md:text-2xl max-w-2xl mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            เชื่อมโยงอดีต สร้างสรรค์ปัจจุบัน เพื่ออนาคตที่ยั่งยืน
+          </motion.p>
+          
+          <motion.div
+            className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <Link href="/donate">
+              <div className="px-8 py-3 bg-yellow-400 text-[#204396] font-bold rounded-full text-lg hover:bg-yellow-300 transition duration-300 shadow-lg">
+                บริจาคกองทุนแบ่งสรรปันน้อง
+              </div>
+            </Link>
+            <Link href="#about">
+              <div className="px-8 py-3 bg-white/20 text-white font-bold rounded-full text-lg hover:bg-white/30 transition duration-300 backdrop-blur-sm">
+                เกี่ยวกับสมาคม
+              </div>
+            </Link>
+          </motion.div>
         </div>
+        
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+          >
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </motion.div>
+        </div>
+      </div>
 
-        {/* Donation Data */}
-        <div className="bg-teal-800 rounded-lg p-6 text-center">
-          <div className="mb-6">
-            <p className="text-xl lg:text-2xl font-bold">
-              ข้อมูล ณ วันที่ {new Date().toLocaleDateString("th-TH", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              })} เวลา {new Date().toLocaleTimeString("th-TH", {
-              hour: "2-digit",
-              minute: "2-digit",
-              })}
-            </p>
+      {/* About Section */}
+      <div id="about" className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">เกี่ยวกับสมาคม</h2>
+            <div className="w-20 h-1 bg-yellow-400 mx-auto"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white text-teal-900 p-4 rounded-lg">
-              <p className="text-sm font-semibold">เป้าหมายบริจาค</p>
-              <p className="text-2xl font-bold">750,000 บาท</p>
-            </div>
-            <div className="bg-white text-teal-900 p-4 rounded-lg">
-              <p className="text-sm font-semibold">ยอดเงินบริจาค ณ ปัจจุบัน</p>
-              <p className="text-2xl font-bold">{data.donation}</p>
-            </div>
-            <div className="bg-white text-teal-900 p-4 rounded-lg">
-              <p className="text-sm font-semibold">จำนวนผู้บริจาค</p>
-              <p className="text-2xl font-bold">{data.donors}</p>
-            </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <img 
+                src="/img/alumni-group.jpg" 
+                alt="MWIT Alumni Group" 
+                className="rounded-lg shadow-xl w-full object-cover h-[400px]" 
+              />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-white"
+            >
+              <h3 className="text-2xl font-bold mb-4 text-yellow-400">พันธกิจของเรา</h3>
+              <p className="text-lg mb-6">
+                สมาคมศิษย์เก่าโรงเรียนมหิดลวิทยานุสรณ์ ก่อตั้งขึ้นเพื่อเป็นศูนย์กลางในการเชื่อมโยงศิษย์เก่าทุกรุ่น 
+                สร้างเครือข่ายความร่วมมือ และส่งเสริมการพัฒนาศักยภาพของนักเรียนปัจจุบัน
+              </p>
+              
+              <h3 className="text-2xl font-bold mb-4 text-yellow-400">เป้าหมายของเรา</h3>
+              <ul className="space-y-2 mb-6 list-disc pl-5">
+                <li>สร้างชุมชนและเครือข่ายศิษย์เก่าที่เข้มแข็ง</li>
+                <li>สนับสนุนการศึกษาและกิจกรรมของนักเรียนปัจจุบัน</li>
+                <li>ส่งเสริมการพัฒนาศักยภาพทางวิชาการและการสร้างนวัตกรรม</li>
+                <li>ร่วมพัฒนาการศึกษาวิทยาศาสตร์และเทคโนโลยีของประเทศ</li>
+              </ul>
+              
+              <Link href="/donate">
+                <div className="inline-block px-6 py-3 bg-yellow-400 text-[#204396] font-bold rounded-full text-lg hover:bg-yellow-300 transition duration-300 shadow-lg">
+                  ร่วมสนับสนุนกองทุน
+                </div>
+              </Link>
+            </motion.div>
           </div>
         </div>
+      </div>
 
-        {/* Goals */}
-        <div className="mt-10">
-            <h2 className="text-2xl font-bold text-yellow-400">เป้าหมายกองทุน</h2>
-            <ul className="list-decimal list-inside mt-4 space-y-2 text-lg">
-                <li>เพื่อเป็นทุนการศึกษาให้นักเรียนปัจจุบันที่ต้องการความช่วยเหลือด้านทุนทรัพย์</li>
-                <li>เพื่อเป็นทุนการศึกษาสำหรับนักเรียนในการทำกิจกรรมบำเพ็ญประโยชน์</li>
-                <li>เพื่อเป็นทุนการศึกษาสำหรับนักเรียนในการนำเสนอโครงการหรือการเข้าร่วมการแข่งขันทั้งในและต่างประเทศ</li>
-                <li>เพื่อเป็นทุนการศึกษาสำหรับกิจกรรมของคณะกรรมการสภานักเรียน</li>
-            </ul>
-        </div>
-        <div className="mt-10">
-          <img src="/img/mob.png" alt="สมาคมศิษย์เก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์" className="rounded-lg shadow-lg" />
-        </div>
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6" id="howtodonate">
-          <div className="bg-white text-teal-900 p-6 rounded-lg text-center">
-              <div className="text-4xl font-bold text-[#204297] mb-4">1</div>
-              <p className="font-semibold text-2xl mb-2">โอนเงินเข้าบัญชี<br/>โรงเรียนมหิดลวิทยานุสรณ์</p>
-              <p className="text-lg">บริจาคเงินเข้าระบบ E-DONATION<br/>เป้าตุง เติมบุญ</p>
-              <p className="font-bold mt-2">กองบุญ : 09940000521472001</p>
-              <div className="">
-                <img src="/img/qr-schhol.png" alt="QR Code" className="mx-auto h-64"/>
-              </div>
-              <p className=" text-xl font-semibold">บัญชีโรงเรียนมหิดลวิทยานุสรณ์<br/>ธนาคารกรุงไทย</p>
-              <p className="font-bold text-yellow-400">เลขที่บัญชี 459-0-47124-8</p>
+      {/* Achievements Section */}
+      <div className="py-20 px-4 md:px-8 bg-white/10">
+        <div className="max-w-6xl mx-auto text-white">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">ผลงานที่ผ่านมา</h2>
+            <div className="w-20 h-1 bg-yellow-400 mx-auto"></div>
           </div>
-          <div className="bg-white text-teal-900 p-6 rounded-lg text-center">
-              <div className="text-4xl font-bold text-[#204297] mb-4">2</div>
-              <p className="font-semibold text-2xl mb-2">แจ้งข้อมูลการโอนเงินบริจาค</p>
-              <p className="text-xl mb-4">มายัง กิจกรรมนักเรียนเก่า</p>
-              <div className="rounded-lg inline-block lg:mt-8 mb-5">
-                  <img src="/img/qr-ggf.png" alt="Form QR Code" className="mx-auto h-64"/>
-              </div>
-              <div className="mt-4">
-                  <Link href="https://tiny.mwit.link/alumni-donation" className="bg-yellow-400 text-teal-900 px-8 py-2 rounded-full font-semibold text-lg lg:text-xl" target="_blank">CLICK LINK</Link>
-              </div>
-          </div>
-          <div className="bg-white text-teal-900 p-4 rounded-lg text-center lg:content-center">
-              <div className="text-4xl font-bold text-[#204297] mb-4">3</div>
-              <div className="">
-                <p className="font-semibold text-2xl mb-2">รอรับเอกสารตามที่อยู่ที่แจ้งไว้</p>
-                <p className="text-xl">ขอขอบคุณทุก ๆ ท่านที่ร่วมกันส่งต่อโอกาสดีดีให้กับน้องๆ นะครับ</p>
-              </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="bg-[#1a367d] p-6 rounded-lg shadow-lg"
+            >
+              <div className="text-yellow-400 text-4xl font-bold mb-4">250+</div>
+              <h3 className="text-xl font-bold mb-2">ทุนการศึกษา</h3>
+              <p>มอบทุนการศึกษาให้แก่นักเรียนปัจจุบันที่มีความสามารถและขาดแคลนทุนทรัพย์</p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-[#1a367d] p-6 rounded-lg shadow-lg"
+            >
+              <div className="text-yellow-400 text-4xl font-bold mb-4">45+</div>
+              <h3 className="text-xl font-bold mb-2">โครงการพัฒนา</h3>
+              <p>สนับสนุนโครงการพัฒนาทักษะและการสร้างนวัตกรรมของนักเรียน</p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="bg-[#1a367d] p-6 rounded-lg shadow-lg"
+            >
+              <div className="text-yellow-400 text-4xl font-bold mb-4">20+</div>
+              <h3 className="text-xl font-bold mb-2">การแข่งขันระดับนานาชาติ</h3>
+              <p>สนับสนุนนักเรียนในการเข้าร่วมการแข่งขันทางวิชาการในระดับนานาชาติ</p>
+            </motion.div>
           </div>
         </div>
-        <div className="mt-10 bg-teal-800 rounded-lg p-6">
-            <h2 className="text-xl lg:text-3xl font-bold text-center mb-6"><p className="text-2xl lg:text-5xl">Q&A</p><br/> คำถามและคำตอบเกี่ยวกับทุนการศึกษา</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:text-lg">
-                <div className="bg-teal-700 p-5 rounded-lg">
-                    <h3 className="font-bold text-yellow-400 mb-2">📚 1. รายละเอียดและหลักเกณฑ์การจัดสรรทุนการศึกษา</h3>
-                    <p className="text-sm leading-relaxed">
-                        ทุนการศึกษาสำหรับนักเรียนที่มีความประสงค์ช่วยเหลือด้านทุนทรัพย์เป็นรายปี กองทุนนี้จะสะสมทุนไว้สำหรับ 2 ปีการศึกษา <br/>
-                        <strong>ทุนประจำปีการศึกษา 2567</strong> : จำนวน 18 ทุน งบประมาณ 240,000 บาท
-                    </p>
-                    <ul className="list-disc text-sm ml-5 mt-2">
-                        <li>มูลค่าทุนละ 25,000 บาท</li>
-                        <li>มูลค่าทุนละ 15,000 บาท</li>
-                        <li>มูลค่าทุนละ 10,000 บาท</li>
-                        <li>มูลค่าทุนละ 5,000 บาท</li>
-                    </ul>
+      </div>
+
+      {/* Donation CTA */}
+      <div className="py-20 px-4 md:px-8 bg-gradient-to-r from-[#204396] to-[#2a5ac9]">
+        <div className="max-w-4xl mx-auto text-center text-white">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold mb-6"
+          >
+            ร่วมเป็นส่วนหนึ่งในการสร้างโอกาสทางการศึกษา
+          </motion.h2>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-lg md:text-xl mb-8"
+          >
+            กองทุนแบ่งสรรปันน้อง คือโครงการที่จะช่วยส่งต่อโอกาสดี ๆ ให้กับน้อง ๆ นักเรียนปัจจุบัน
+            ของโรงเรียนมหิดลวิทยานุสรณ์ การบริจาคของท่านสามารถนำไปลดหย่อนภาษีได้ 2 เท่า
+          </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <Link href="/donate">
+              <div className="inline-block px-8 py-4 bg-yellow-400 text-[#204396] font-bold rounded-full text-xl hover:bg-yellow-300 transition duration-300 shadow-lg">
+                บริจาคตอนนี้
+              </div>
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Contact Section */}
+      <div className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto text-white">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">ติดต่อเรา</h2>
+            <div className="w-20 h-1 bg-yellow-400 mx-auto"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-bold mb-6 text-yellow-400">ข้อมูลติดต่อ</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="bg-[#1a367d] p-2 rounded-lg mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg">ที่อยู่</p>
+                    <p>โรงเรียนมหิดลวิทยานุสรณ์</p>
+                    <p>364 หมู่ 5 ต.ศาลายา อ.พุทธมณฑล จ.นครปฐม 73170</p>
+                  </div>
                 </div>
-                <div className="bg-teal-700 p-5 rounded-lg">
-                    <h3 className="font-bold text-yellow-400 mb-2">📚 2. เหตุผลในการดำเนินการจัดหาทุนสนับสนุนเพิ่มเติม</h3>
-                    <p className="text-sm leading-relaxed">
-                        เนื่องด้วยทุนการศึกษาสำหรับนักเรียนที่ขาดแคลนทุนทรัพย์ยังคงอยู่ในเงื่อนไขการเบิกจ่ายงบประมาณของภาครัฐ 
-                    </p>
+                
+                <div className="flex items-start">
+                  <div className="bg-[#1a367d] p-2 rounded-lg mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg">อีเมล</p>
+                    <p><a href="mailto:alumni@mwit.ac.th" className="hover:text-yellow-400">alumni@mwit.ac.th</a></p>
+                  </div>
                 </div>
-                <div className="bg-teal-700 p-5 rounded-lg">
-                    <h3 className="font-bold text-yellow-400 mb-2">📚 3. ทุนสนับสนุนการนำเสนอผลงานและการแข่งขันทางวิชาการ</h3>
-                    <p className="text-sm leading-relaxed">
-                        งบประมาณการจัดสรร: 100,000 บาทต่อปีการศึกษา<br/>
-                        จำนวนทุนที่จัดสรร: 5-10 ทุน
-                    </p>
+                
+                <div className="flex items-start">
+                  <div className="bg-[#1a367d] p-2 rounded-lg mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg">โทรศัพท์</p>
+                    <p>02-0277850 ต่อ 242</p>
+                  </div>
                 </div>
-            </div>
+                
+                <div className="flex items-start">
+                  <div className="bg-[#1a367d] p-2 rounded-lg mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-lg">ผู้ดูแลกองทุน</p>
+                    <p>นายวัชชิรทาน เข็มทอง</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="bg-[#1a367d] p-6 rounded-lg shadow-lg"
+            >
+              <h3 className="text-2xl font-bold mb-6 text-yellow-400">ส่งข้อความถึงเรา</h3>
+              
+              <form className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block mb-2 font-medium">ชื่อ-นามสกุล</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    placeholder="กรอกชื่อ-นามสกุล" 
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block mb-2 font-medium">อีเมล</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    placeholder="กรอกอีเมล" 
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="message" className="block mb-2 font-medium">ข้อความ</label>
+                  <textarea 
+                    id="message" 
+                    rows={4} 
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    placeholder="กรอกข้อความ"
+                  ></textarea>
+                </div>
+                
+                <button 
+                  type="submit" 
+                  className="w-full py-3 bg-yellow-400 text-[#204396] font-bold rounded-lg hover:bg-yellow-300 transition duration-300"
+                >
+                  ส่งข้อความ
+                </button>
+              </form>
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>
