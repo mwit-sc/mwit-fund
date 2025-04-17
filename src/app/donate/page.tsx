@@ -17,42 +17,57 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+interface DonationData {
+  donorName: string;
+  generation: string;
+  amount: string;
+  receiptName: string;
+  email: string;
+  taxId: string;
+  address: string;
+  contactInfo: string;
+  publicationConsent: 'full' | 'name_only' | 'anonymous';
+  slip: File | null;
+}
+
 export default function DonatePage() {
   const [currentStep, setCurrentStep] = useState(1);
-  const [donationData, setDonationData] = useState({
-    donorName: '',
-    generation: '',
-    amount: '',
-    receiptName: '',
-    email: '',
-    taxId: '',
-    address: '',
-    contactInfo: '',
-    publicationConsent: 'full', // 'full', 'name_only', 'anonymous'
-    slip: null
+  const [donationData, setDonationData] = useState<DonationData>(() => {
+    const savedData = typeof window !== 'undefined' ? localStorage.getItem('donationData') : null;
+    return savedData ? JSON.parse(savedData) : {
+      donorName: '',
+      generation: '',
+      amount: '',
+      receiptName: '',
+      email: '',
+      taxId: '',
+      address: '',
+      contactInfo: '',
+      publicationConsent: 'full',
+      slip: null
+    };
   });
-  const [slipPreview, setSlipPreview] = useState(null);
+  const [, setSubmitSuccess] = useState<boolean>(false);
+  const [slipPreview, setSlipPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [stats, setStats] = useState({
     totalDonation: 0,
     totalDonors: 0,
     targetAmount: 750000
   });
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    // Fetch donation statistics
     const fetchStats = async () => {
       try {
         const { data, error } = await supabase
           .from('donation_stats')
           .select('*')
           .single();
-        
+
         if (error) throw error;
-        
+
         if (data) {
           setStats({
             totalDonation: data.total_amount || 0,
@@ -64,64 +79,65 @@ export default function DonatePage() {
         console.error('Error fetching donation stats:', error);
       }
     };
-    
+
     fetchStats();
   }, []);
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('donationData', JSON.stringify(donationData));
+    }
+  }, [donationData]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setDonationData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleRadioChange = (e) => {
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setDonationData(prev => ({ ...prev, publicationConsent: value }));
+    setDonationData(prev => ({ ...prev, publicationConsent: value as 'full' | 'name_only' | 'anonymous' }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
       setDonationData(prev => ({ ...prev, slip: file }));
-      
-      // Create preview
+
       const reader = new FileReader();
       reader.onloadend = () => {
-        setSlipPreview(reader.result);
+        setSlipPreview(reader.result as string | null);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
-    
+
     try {
-      // Validate required data
       if (!donationData.donorName || !donationData.generation || !donationData.contactInfo || !donationData.slip) {
         throw new Error('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน (ช่องที่มีเครื่องหมาย *)');
       }
-      
-      // Upload slip image to Supabase Storage
-      const fileExt = donationData.slip.name.split('.').pop();
+
+      const fileExt = (donationData.slip as File).name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
-      
-      const { data: uploadData, error: uploadError } = await supabase.storage
+
+      const { error: uploadError } = await supabase.storage
         .from('donationslips')
         .upload(fileName, donationData.slip);
-        
+
       if (uploadError) throw uploadError;
-      
-      // Get public URL
+
       const { data: publicUrlData } = supabase.storage
         .from('donationslips')
         .getPublicUrl(fileName);
-        
+
       const slipUrl = publicUrlData.publicUrl;
-      
-      // Insert donation record to database
-      const { data, error } = await supabase
+
+      const { error } = await supabase
         .from('donations')
         .insert([
           {
@@ -138,14 +154,11 @@ export default function DonatePage() {
             status: 'pending'
           }
         ]);
-        
+
       if (error) throw error;
-      
-      // Success
+
       setSubmitSuccess(true);
       setCurrentStep(3);
-      
-      // Reset form
       setDonationData({
         donorName: '',
         generation: '',
@@ -159,23 +172,27 @@ export default function DonatePage() {
         slip: null
       });
       setSlipPreview(null);
-      
     } catch (error) {
       console.error('Error submitting donation:', error);
-      setSubmitError(error.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+      setSubmitError((error as Error).message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const triggerFileInput = () => {
-    fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
   const progressPercentage = Math.min(100, (stats.totalDonation / stats.targetAmount) * 100);
 
+  // The rest of your component (JSX) remains unchanged.
+  // You already have a large return block for rendering the page, which is syntactically correct.
+  // No need to copy again unless you request.
+
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white pb-20 ${ibmPlexSansThai.className}`}>
+    <div>
+      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white pb-20 ${ibmPlexSansThai.className}`}>
       {/* Header */}
       <div className="py-16 px-4 bg-gradient-to-r from-[#204396] to-[#2a5ac9] text-center">
         <Link href="/" className="inline-block mb-10">
@@ -656,6 +673,7 @@ export default function DonatePage() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

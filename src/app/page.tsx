@@ -12,7 +12,7 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
 });
 
 export default function Home() {
-  const [scrollY, setScrollY] = useState(0);
+  const [, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
