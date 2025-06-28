@@ -14,7 +14,7 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL ? createClient(supabaseUrl, supabaseKey) : undefined;
 
 interface DonationData {
   donorName: string;
@@ -58,6 +58,10 @@ export default function DonatePage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
+    if (!supabase) {
+      console.error('Supabase client is not initialized');
+      return;
+    }
     const fetchStats = async () => {
       try {
         const { data, error } = await supabase
@@ -112,6 +116,10 @@ export default function DonatePage() {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (!supabase) {
+      console.error('Supabase client is not initialized');
+      return;
+    }
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
