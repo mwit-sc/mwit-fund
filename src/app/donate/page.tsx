@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { IBM_Plex_Sans_Thai } from 'next/font/google';
-import { createClient } from '@supabase/supabase-js';
+import { useSession } from 'next-auth/react';
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({ 
   subsets: ['thai', 'latin'], 
@@ -12,9 +12,7 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
   display: 'swap' 
 });
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL ? createClient(supabaseUrl, supabaseKey) : undefined;
+// Database API is now handled through API routes
 
 interface DonationData {
   donorName: string;
@@ -30,7 +28,10 @@ interface DonationData {
 }
 
 export default function DonatePage() {
+  const { data: session } = useSession();
   const [currentStep, setCurrentStep] = useState(1);
+  const [lastDonation, setLastDonation] = useState<unknown>(null);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [donationData, setDonationData] = useState<DonationData>(() => {
     const savedData = typeof window !== 'undefined' ? localStorage.getItem('donationData') : null;
     return savedData ? JSON.parse(savedData) : {
@@ -58,25 +59,18 @@ export default function DonatePage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (!supabase) {
-      console.error('Supabase client is not initialized');
-      return;
-    }
     const fetchStats = async () => {
       try {
-        const { data, error } = await supabase
-          .from('donation_stats')
-          .select('*')
-          .single();
-
-        if (error) throw error;
-
-        if (data) {
-          setStats({
-            totalDonation: data.total_amount || 0,
-            totalDonors: data.total_donors || 0,
-            targetAmount: data.target_amount || 750000
-          });
+        const response = await fetch('/api/donations/stats');
+        if (response.ok) {
+          const data = await response.json();
+          if (data) {
+            setStats({
+              totalDonation: data.total_amount || 0,
+              totalDonors: data.total_donors || 0,
+              targetAmount: data.target_amount || 750000
+            });
+          }
         }
       } catch (error) {
         console.error('Error fetching donation stats:', error);
@@ -85,6 +79,39 @@ export default function DonatePage() {
 
     fetchStats();
   }, []);
+
+  // Auto-fill email for logged-in users and show popup for non-logged-in users
+  useEffect(() => {
+    if (session?.user?.email) {
+      // Auto-fill email for logged-in users
+      setDonationData(prev => ({
+        ...prev,
+        email: session.user.email || prev.email
+      }));
+      
+      // Fetch last donation for auto-fill
+      const fetchLastDonation = async () => {
+        try {
+          const response = await fetch('/api/user/last-donation');
+          if (response.ok) {
+            const data = await response.json();
+            if (data) {
+              setLastDonation(data);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching last donation:', error);
+        }
+      };
+      fetchLastDonation();
+    } else {
+      // Show popup for non-logged-in users after a short delay
+      const timer = setTimeout(() => {
+        setShowLoginPopup(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [session]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -116,10 +143,6 @@ export default function DonatePage() {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    if (!supabase) {
-      console.error('Supabase client is not initialized');
-      return;
-    }
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
@@ -129,40 +152,39 @@ export default function DonatePage() {
         throw new Error('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน (ช่องที่มีเครื่องหมาย *)');
       }
 
-      const fileExt = (donationData.slip as File).name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`;
+      // Upload slip image to Cloudflare R2
+      let slipUrl = null;
+      if (donationData.slip) {
+        const formData = new FormData();
+        formData.append('file', donationData.slip);
 
-      const { error: uploadError } = await supabase.storage
-        .from('donationslips')
-        .upload(fileName, donationData.slip);
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
 
-      if (uploadError) throw uploadError;
+        if (!uploadResponse.ok) {
+          throw new Error('Failed to upload slip image');
+        }
 
-      const { data: publicUrlData } = supabase.storage
-        .from('donationslips')
-        .getPublicUrl(fileName);
+        const uploadResult = await uploadResponse.json();
+        slipUrl = uploadResult.url;
+      }
 
-      const slipUrl = publicUrlData.publicUrl;
+      const response = await fetch('/api/donations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          donationData,
+          slipImageUrl: slipUrl
+        }),
+      });
 
-      const { error } = await supabase
-        .from('donations')
-        .insert([
-          {
-            donor_name: donationData.donorName,
-            generation: donationData.generation,
-            amount: parseFloat(donationData.amount) || 0,
-            receipt_name: donationData.receiptName,
-            donor_email: donationData.email,
-            tax_id: donationData.taxId,
-            address: donationData.address,
-            contact_info: donationData.contactInfo,
-            publication_consent: donationData.publicationConsent,
-            slip_image_url: slipUrl,
-            status: 'pending'
-          }
-        ]);
-
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error('Failed to submit donation');
+      }
 
       setSubmitSuccess(true);
       setCurrentStep(3);
@@ -179,6 +201,11 @@ export default function DonatePage() {
         slip: null
       });
       setSlipPreview(null);
+      
+      // Clear localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('donationData');
+      }
     } catch (error) {
       console.error('Error submitting donation:', error);
       setSubmitError((error as Error).message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
@@ -189,6 +216,22 @@ export default function DonatePage() {
 
   const triggerFileInput = () => {
     fileInputRef.current?.click();
+  };
+
+  const fillFromLastDonation = () => {
+    if (lastDonation) {
+      setDonationData(prev => ({
+        ...prev,
+        donorName: lastDonation.donor_name || '',
+        generation: lastDonation.generation || '',
+        receiptName: lastDonation.receipt_name || '',
+        email: lastDonation.donor_email || session?.user?.email || '',
+        taxId: lastDonation.tax_id || '',
+        address: lastDonation.address || '',
+        contactInfo: lastDonation.contact_info || '',
+        publicationConsent: lastDonation.publication_consent || 'full'
+      }));
+    }
   };
 
   const progressPercentage = Math.min(100, (stats.totalDonation / stats.targetAmount) * 100);
@@ -289,7 +332,21 @@ export default function DonatePage() {
             transition={{ duration: 0.5 }}
             className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg max-w-3xl mx-auto"
           >
-            <h2 className="text-2xl font-bold mb-6">ข้อมูลผู้บริจาค</h2>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">ข้อมูลผู้บริจาค</h2>
+              {lastDonation && session?.user && (
+                <button
+                  type="button"
+                  onClick={fillFromLastDonation}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-300 flex items-center space-x-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  <span>ใช้ข้อมูลครั้งก่อน</span>
+                </button>
+              )}
+            </div>
             
             <form className="space-y-6">
               <div>
@@ -310,10 +367,10 @@ export default function DonatePage() {
               
               <div>
                 <label htmlFor="generation" className="block mb-2 font-medium">
-                  รุ่น <span className="text-yellow-400">*</span>
+                  รุ่น
                 </label>
                 <input 
-                  type="text" 
+                  type="number" 
                   id="generation" 
                   name="generation"
                   value={donationData.generation}
@@ -680,6 +737,67 @@ export default function DonatePage() {
           </div>
         </div>
       </div>
+
+      {/* Login Popup */}
+      {showLoginPopup && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 text-gray-800"
+          >
+            <div className="text-center mb-6">
+              <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">บริจาคโดยไม่บันทึก?</h3>
+              <p className="text-gray-600">
+                เข้าสู่ระบบเพื่อบันทึกประวัติการบริจาคและเติมข้อมูลอัตโนมัติ
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {/* <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-semibold text-blue-900 mb-2">ประโยชน์ของการเข้าสู่ระบบ:</h4>
+                <ul className="text-sm text-blue-800 space-y-1">
+                  <li>• บันทึกประวัติการบริจาค</li>
+                  <li>• เติมข้อมูลส่วนตัวอัตโนมัติ</li>
+                  <li>• ติดตามสถานะการบริจาค</li>
+                  <li>• ดาวน์โหลดใบเสร็จได้ทันที</li>
+                </ul>
+              </div> */}
+
+              <div className="space-y-3">
+                <Link 
+                  href="/auth/signin"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-300 flex items-center justify-center space-x-2 font-medium"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  <span>เข้าสู่ระบบด้วย Google</span>
+                </Link>
+                <button
+                  onClick={() => setShowLoginPopup(false)}
+                  className="w-full px-4 py-3 bg-yellow-200 text-gray-800 rounded-lg hover:bg-yellow-300 transition duration-300 font-medium"
+                >
+                  บริจาคต่อ
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-500 text-center">
+                คุณสามารถบริจาคได้โดยไม่ต้องเข้าสู่ระบบ แต่จะไม่สามารถบันทึกประวัติได้
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
     </div>
   );
