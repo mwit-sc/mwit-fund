@@ -1,7 +1,8 @@
 import GoogleProvider from "next-auth/providers/google";
+import type { NextAuthOptions } from "next-auth";
 import { DatabaseAPI } from "./api";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -12,7 +13,7 @@ export const authOptions = {
     signIn: '/auth/signin',
   },
   callbacks: {
-    async signIn({ account, profile }: { account: any; profile: any }) { // eslint-disable-line @typescript-eslint/no-explicit-any
+    async signIn({ account, profile }) {
       if (account?.provider === "google") {
         // You can add email domain restrictions here
         // For example, only allow @mwit.ac.th emails
@@ -22,17 +23,17 @@ export const authOptions = {
       }
       return true;
     },
-    async session({ session, token }: { session: any; token: any }) { // eslint-disable-line @typescript-eslint/no-explicit-any
+    async session({ session, token }) {
       // Add user ID and role to session
       if (token.sub) {
         session.user.id = token.sub;
       }
       if (token.role) {
-        session.user.role = token.role;
+        session.user.role = token.role as string;
       }
       return session;
     },
-    async jwt({ token, account, profile }: { token: any; account: any; profile: any }) { // eslint-disable-line @typescript-eslint/no-explicit-any
+    async jwt({ token, account, profile }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
         token.accessToken = account.access_token;
@@ -72,6 +73,6 @@ export const authOptions = {
     },
   },
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const,
   },
 };

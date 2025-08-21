@@ -1,50 +1,40 @@
 # Use the official Node.js image as the base image
-FROM node:18-alpine AS base
-
-ENV USEDOCKER=true
-
-WORKDIR /app
+FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-
-RUN npm ci --include=dev
+COPY package.json package-lock.json* ./
+RUN \
+  if [ -f package-lock.json ]; then npm ci; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
+# Set environment for Docker build
+ENV USEDOCKER=true
 ENV NEXT_TELEMETRY_DISABLED=1
 
-
-COPY next.config.mjs tsconfig.json ./
-COPY tailwind.config.ts ./
-
-# Build the application using Node.js
+# Build the application
 RUN npm run build
 
-# Production image, copy all the files and run with Node.js
+# Production image, copy all the files and run Next.js
 FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-# Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Create user and group with different GID and UID if needed
-RUN addgroup --system --gid 1002 nodejs || echo "Group exists" && \
-    adduser --system --uid 1002 nextjs || echo "User exists"
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
@@ -62,8 +52,7 @@ USER nextjs
 EXPOSE 3000
 
 ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-RUN ls -l /app
-
-# Use Node.js to run server.js
-CMD HOSTNAME="0.0.0.0" node server.js
+# server.js is created by next build from the standalone output
+CMD ["node", "server.js"]
