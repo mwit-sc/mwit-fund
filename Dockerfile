@@ -22,6 +22,19 @@ COPY . .
 # Set environment for Docker build
 ENV USEDOCKER=true
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+
+# Set dummy environment variables for build (will be overridden at runtime)
+ENV DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy
+ENV NEXTAUTH_URL=http://localhost:3000
+ENV NEXTAUTH_SECRET=dummy-secret-for-build
+ENV GOOGLE_CLIENT_ID=dummy-client-id
+ENV GOOGLE_CLIENT_SECRET=dummy-client-secret
+ENV R2_ENDPOINT=https://dummy.r2.cloudflarestorage.com
+ENV R2_ACCESS_KEY_ID=dummy
+ENV R2_SECRET_ACCESS_KEY=dummy
+ENV R2_BUCKET_NAME=dummy
+ENV R2_PUBLIC_URL=https://dummy.com
 
 # Build the application
 RUN npm run build

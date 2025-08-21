@@ -16,11 +16,8 @@ const nextConfig = {
     ignoreDuringBuilds: process.env.NODE_ENV === 'production',
   },
   
-  // Experimental features
-  experimental: {
-    // Enable server components optimization
-    serverComponentsExternalPackages: ['pg', '@aws-sdk/client-s3'],
-  },
+  // Server external packages (moved from experimental)
+  serverExternalPackages: ['pg', '@aws-sdk/client-s3'],
   
   // Docker-specific configuration
   ... process.env.USEDOCKER === 'true' ? {
