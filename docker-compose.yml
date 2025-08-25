@@ -1,6 +1,6 @@
 services:
   mwit-fund:
-    image: ghcr.io/mwit-sc/mwit-fund:latest
+    image: ghcr.io/mwit-sc/mwit-fund:release
     container_name: mwit-fund-web
     restart: unless-stopped
     environment:
