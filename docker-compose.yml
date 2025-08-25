@@ -18,7 +18,15 @@ services:
       R2_PUBLIC_URL: ${R2_PUBLIC_URL}
     networks:
       - mwit-fund-network
-
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mwit-fund.entrypoints=http"
+      - "traefik.http.routers.mwit-fund.rule=Host(`alumni.mwit.ac.th`)"
+      - "traefik.http.routers.mwit-fund.middlewares=traefik-https-redirect"
+      - "traefik.http.routers.mwit-fund-secure.entrypoints=https"
+      - "traefik.http.routers.mwit-fund-secure.rule=Host(`alumni.mwit.ac.th`)"
+      - "traefik.http.routers.mwit-fund-secure.tls=true"
+      - "traefik.http.routers.mwit-fund-secure.tls.certresolver=letsencrypt"
   postgres:
     image: postgres:15
     container_name: mwit-fund-db
@@ -39,6 +47,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  traefik:
+    image: traefik:v3.5
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - mwit-fund-network
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /srv/certs/le.json:/le.json
+      - ./config/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - ./config/traefik/dynamic:/dynamic:ro
 
 volumes:
   postgres_data:
