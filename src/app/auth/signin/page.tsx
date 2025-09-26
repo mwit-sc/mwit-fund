@@ -100,7 +100,7 @@ export default function SignIn() {
               className="w-20 h-20 mx-auto rounded-xl shadow-lg mb-4" 
             />
             <h2 className="text-2xl font-bold">เข้าสู่ระบบรับบริจาค</h2>
-            <p className="text-white/80 mt-2">สมาคมศิษย์เก่าโรงเรียนมหิดลวิทยานุสรณ์</p>
+            <p className="text-white/80 mt-2">สมาคมนักเรียนเก่าโรงเรียนมหิดลวิทยานุสรณ์</p>
           </div>
 
           {/* Google Sign In Button */}

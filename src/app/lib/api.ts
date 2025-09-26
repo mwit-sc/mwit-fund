@@ -1,6 +1,6 @@
 // lib/api.ts
-import pool from './database';
-import { PoolClient } from 'pg';
+import { prisma } from './prisma';
+import { Prisma } from '@prisma/client';
 
 export interface DonationData {
   donorName: string;
@@ -60,309 +60,303 @@ export interface UserData {
 export class DatabaseAPI {
   // Get donation statistics
   static async getDonationStats(): Promise<DonationStats | null> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const result = await client.query('SELECT * FROM donation_stats WHERE id = 1');
+      const stats = await prisma.donationStats.findFirst({
+        where: { id: 1 }
+      });
       
-      if (result.rows.length > 0) {
-        return result.rows[0] as DonationStats;
+      if (stats) {
+        return {
+          total_amount: Number(stats.total_amount),
+          total_donors: stats.total_donors,
+          target_amount: Number(stats.target_amount)
+        };
       }
       return null;
     } catch (error) {
       console.error('Error fetching donation stats:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // Insert a new donation
   static async insertDonation(donationData: DonationData, slipImageUrl?: string): Promise<unknown> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      
-      const query = `
-        INSERT INTO donations (
-          donor_name, generation, amount, receipt_name, donor_email, 
-          tax_id, address, contact_info, publication_consent, slip_image_url, status
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-        RETURNING *
-      `;
-      
-      const values = [
-        donationData.donorName,
-        donationData.generation,
-        parseFloat(donationData.amount) || 0,
-        donationData.receiptName,
-        donationData.email,
-        donationData.taxId,
-        donationData.address,
-        donationData.contactInfo,
-        donationData.publicationConsent,
-        slipImageUrl || null,
-        'pending'
-      ];
-      
-      const result = await client.query(query, values);
-      return result.rows[0];
+      const donation = await prisma.donation.create({
+        data: {
+          donor_name: donationData.donorName,
+          generation: donationData.generation,
+          amount: new Prisma.Decimal(parseFloat(donationData.amount) || 0),
+          receipt_name: donationData.receiptName,
+          donor_email: donationData.email,
+          tax_id: donationData.taxId,
+          address: donationData.address,
+          contact_info: donationData.contactInfo,
+          publication_consent: donationData.publicationConsent,
+          slip_image_url: slipImageUrl || null,
+          status: 'pending'
+        }
+      });
+      return donation;
     } catch (error) {
       console.error('Error inserting donation:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // Get all donations (for admin purposes)
   static async getAllDonations(): Promise<unknown[]> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const result = await client.query('SELECT * FROM donations ORDER BY created_at DESC');
-      return result.rows;
+      const donations = await prisma.donation.findMany({
+        orderBy: { created_at: 'desc' }
+      });
+      return donations;
     } catch (error) {
       console.error('Error fetching donations:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // Update donation status
   static async updateDonationStatus(id: number, status: 'pending' | 'approved' | 'rejected'): Promise<unknown> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const query = 'UPDATE donations SET status = $1, updated_at = NOW() WHERE id = $2 RETURNING *';
-      const result = await client.query(query, [status, id]);
-      return result.rows[0];
+      const donation = await prisma.donation.update({
+        where: { id },
+        data: { status }
+      });
+      return donation;
     } catch (error) {
       console.error('Error updating donation status:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // Get donations by generation (รุ่น)
   static async getDonationsByGeneration(): Promise<DonationByGeneration[]> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const query = `
-        SELECT 
-          generation,
-          SUM(amount) as total_amount,
-          COUNT(DISTINCT donor_name) as donor_count
-        FROM donations 
-        WHERE status = 'approved'
-        GROUP BY generation 
-        ORDER BY generation
-      `;
-      const result = await client.query(query);
-      return result.rows;
+      const result = await prisma.donation.groupBy({
+        by: ['generation'],
+        where: { status: 'approved' },
+        _sum: { amount: true },
+        _count: { donor_name: true },
+        orderBy: { generation: 'asc' }
+      });
+      
+      return result.map(item => ({
+        generation: item.generation,
+        total_amount: Number(item._sum.amount || 0),
+        donor_count: item._count.donor_name
+      }));
     } catch (error) {
       console.error('Error fetching donations by generation:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // Get yearly statistics
   static async getYearlyStats(): Promise<YearlyStats[]> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const query = 'SELECT * FROM yearly_stats ORDER BY academic_year DESC';
-      const result = await client.query(query);
-      return result.rows;
+      const stats = await prisma.yearlyStats.findMany({
+        orderBy: { academic_year: 'desc' }
+      });
+      
+      return stats.map(stat => ({
+        academic_year: stat.academic_year,
+        total_donations: Number(stat.total_donations),
+        total_expenses: Number(stat.total_expenses),
+        total_income: Number(stat.total_income),
+        donor_count: stat.donor_count,
+        balance: Number(stat.balance)
+      }));
     } catch (error) {
       console.error('Error fetching yearly stats:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // Add expense/income record
   static async addExpense(expenseData: ExpenseData): Promise<unknown> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const query = `
-        INSERT INTO expenses (
-          title, description, amount, expense_type, category, 
-          academic_year, expense_date, receipt_url, created_by
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        RETURNING *
-      `;
-      const values = [
-        expenseData.title,
-        expenseData.description,
-        expenseData.amount,
-        expenseData.expense_type,
-        expenseData.category,
-        expenseData.academic_year,
-        expenseData.expense_date,
-        expenseData.receipt_url,
-        expenseData.created_by
-      ];
-      const result = await client.query(query, values);
+      const expense = await prisma.expense.create({
+        data: {
+          title: expenseData.title,
+          description: expenseData.description,
+          amount: new Prisma.Decimal(expenseData.amount),
+          expense_type: expenseData.expense_type,
+          category: expenseData.category,
+          academic_year: expenseData.academic_year,
+          expense_date: new Date(expenseData.expense_date),
+          receipt_url: expenseData.receipt_url,
+          created_by: expenseData.created_by
+        }
+      });
       
       // Update yearly stats
-      await this.updateYearlyStats(expenseData.academic_year, client);
+      await this.updateYearlyStats(expenseData.academic_year);
       
-      return result.rows[0];
+      return expense;
     } catch (error) {
       console.error('Error adding expense:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // Get expenses by year
   static async getExpensesByYear(academicYear: string): Promise<unknown[]> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const query = 'SELECT * FROM expenses WHERE academic_year = $1 ORDER BY expense_date DESC';
-      const result = await client.query(query, [academicYear]);
-      return result.rows;
+      const expenses = await prisma.expense.findMany({
+        where: { academic_year: academicYear },
+        orderBy: { expense_date: 'desc' }
+      });
+      return expenses;
     } catch (error) {
       console.error('Error fetching expenses:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // User management methods
   static async createOrUpdateUser(userData: UserData): Promise<UserData> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const query = `
-        INSERT INTO users (email, name, image_url, role)
-        VALUES ($1, $2, $3, $4)
-        ON CONFLICT (email) 
-        DO UPDATE SET 
-          name = EXCLUDED.name,
-          image_url = EXCLUDED.image_url,
-          updated_at = NOW()
-        RETURNING *
-      `;
-      const values = [userData.email, userData.name, userData.image_url, userData.role];
-      const result = await client.query(query, values);
-      return result.rows[0];
+      const user = await prisma.user.upsert({
+        where: { email: userData.email },
+        update: {
+          name: userData.name,
+          image_url: userData.image_url
+        },
+        create: {
+          email: userData.email,
+          name: userData.name,
+          image_url: userData.image_url,
+          role: userData.role
+        }
+      });
+      
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.name || undefined,
+        image_url: user.image_url || undefined,
+        role: user.role as 'user' | 'admin'
+      };
     } catch (error) {
       console.error('Error creating/updating user:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   static async getUserByEmail(email: string): Promise<UserData | null> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
-      return result.rows[0] || null;
+      const user = await prisma.user.findUnique({
+        where: { email }
+      });
+      
+      if (!user) return null;
+      
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.name || undefined,
+        image_url: user.image_url || undefined,
+        role: user.role as 'user' | 'admin'
+      };
     } catch (error) {
       console.error('Error fetching user:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   static async getUserDonations(email: string): Promise<unknown[]> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const result = await client.query(
-        'SELECT * FROM donations WHERE donor_email = $1 ORDER BY created_at DESC',
-        [email]
-      );
-      return result.rows;
+      const donations = await prisma.donation.findMany({
+        where: { donor_email: email },
+        orderBy: { created_at: 'desc' }
+      });
+      return donations;
     } catch (error) {
       console.error('Error fetching user donations:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   static async getLastDonationByEmail(email: string): Promise<unknown | null> {
-    let client: PoolClient | null = null;
     try {
-      client = await pool.connect();
-      const result = await client.query(
-        'SELECT * FROM donations WHERE donor_email = $1 ORDER BY created_at DESC LIMIT 1',
-        [email]
-      );
-      return result.rows[0] || null;
+      const donation = await prisma.donation.findFirst({
+        where: { donor_email: email },
+        orderBy: { created_at: 'desc' }
+      });
+      return donation;
     } catch (error) {
       console.error('Error fetching last donation:', error);
       throw error;
-    } finally {
-      if (client) client.release();
     }
   }
 
   // Update yearly statistics
-  private static async updateYearlyStats(academicYear: string, client: PoolClient): Promise<void> {
+  private static async updateYearlyStats(academicYear: string): Promise<void> {
     try {
-      // Calculate totals for the year
-      const donationsQuery = `
-        SELECT COALESCE(SUM(amount), 0) as total_donations, COUNT(DISTINCT donor_name) as donor_count
-        FROM donations 
-        WHERE status = 'approved' AND EXTRACT(YEAR FROM created_at) = $1
-      `;
-      
-      const expensesQuery = `
-        SELECT 
-          COALESCE(SUM(CASE WHEN expense_type = 'outcome' THEN amount ELSE 0 END), 0) as total_expenses,
-          COALESCE(SUM(CASE WHEN expense_type = 'income' THEN amount ELSE 0 END), 0) as total_income
-        FROM expenses 
-        WHERE academic_year = $1
-      `;
-
       const year = parseInt(academicYear);
-      const donationsResult = await client.query(donationsQuery, [year]);
-      const expensesResult = await client.query(expensesQuery, [academicYear]);
-
-      const donations = donationsResult.rows[0];
-      const expenses = expensesResult.rows[0];
       
-      const balance = parseFloat(donations.total_donations) + parseFloat(expenses.total_income) - parseFloat(expenses.total_expenses);
+      // Calculate donation totals for the year
+      const donationStats = await prisma.donation.aggregate({
+        where: {
+          status: 'approved',
+          created_at: {
+            gte: new Date(`${year}-01-01`),
+            lt: new Date(`${year + 1}-01-01`)
+          }
+        },
+        _sum: { amount: true },
+        _count: { donor_name: true }
+      });
+
+      // Calculate expense totals for the year
+      const expenseStats = await prisma.expense.aggregate({
+        where: { academic_year: academicYear },
+        _sum: { amount: true }
+      });
+
+      const totalOutcome = await prisma.expense.aggregate({
+        where: { 
+          academic_year: academicYear,
+          expense_type: 'outcome'
+        },
+        _sum: { amount: true }
+      });
+
+      const totalIncome = await prisma.expense.aggregate({
+        where: { 
+          academic_year: academicYear,
+          expense_type: 'income'
+        },
+        _sum: { amount: true }
+      });
+
+      const totalDonations = Number(donationStats._sum.amount || 0);
+      const totalExpenses = Number(totalOutcome._sum.amount || 0);
+      const totalIncomeAmount = Number(totalIncome._sum.amount || 0);
+      const donorCount = donationStats._count.donor_name;
+      const balance = totalDonations + totalIncomeAmount - totalExpenses;
 
       // Update or insert yearly stats
-      const upsertQuery = `
-        INSERT INTO yearly_stats (academic_year, total_donations, total_expenses, total_income, donor_count, balance, updated_at)
-        VALUES ($1, $2, $3, $4, $5, $6, NOW())
-        ON CONFLICT (academic_year) 
-        DO UPDATE SET 
-          total_donations = $2,
-          total_expenses = $3,
-          total_income = $4,
-          donor_count = $5,
-          balance = $6,
-          updated_at = NOW()
-      `;
-
-      await client.query(upsertQuery, [
-        academicYear,
-        donations.total_donations,
-        expenses.total_expenses,
-        expenses.total_income,
-        donations.donor_count,
-        balance
-      ]);
+      await prisma.yearlyStats.upsert({
+        where: { academic_year: academicYear },
+        update: {
+          total_donations: new Prisma.Decimal(totalDonations),
+          total_expenses: new Prisma.Decimal(totalExpenses),
+          total_income: new Prisma.Decimal(totalIncomeAmount),
+          donor_count: donorCount,
+          balance: new Prisma.Decimal(balance)
+        },
+        create: {
+          academic_year: academicYear,
+          total_donations: new Prisma.Decimal(totalDonations),
+          total_expenses: new Prisma.Decimal(totalExpenses),
+          total_income: new Prisma.Decimal(totalIncomeAmount),
+          donor_count: donorCount,
+          balance: new Prisma.Decimal(balance)
+        }
+      });
     } catch (error) {
       console.error('Error updating yearly stats:', error);
       throw error;

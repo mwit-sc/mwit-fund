@@ -104,7 +104,7 @@ export default function NotFound() {
             className="mt-16 text-white/30"
           >
             <div className="flex justify-center space-x-4 text-sm">
-              <span>สมาคมศิษย์เก่าโรงเรียนมหิดลวิทยานุสรณ์</span>
+              <span>สมาคมนักเรียนเก่าโรงเรียนมหิดลวิทยานุสรณ์</span>
             </div>
           </motion.div>
         </motion.div>

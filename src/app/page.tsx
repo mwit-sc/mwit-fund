@@ -4,6 +4,7 @@ import Link from "next/link";
 import { IBM_Plex_Sans_Thai } from 'next/font/google';
 import { useEffect, useState } from "react";
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({ 
   subsets: ['thai', 'latin'], 
@@ -13,6 +14,12 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
 
 export default function Home() {
   const [, setScrollY] = useState(0);
+  const [messageForm, setMessageForm] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +31,55 @@ export default function Home() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setMessageForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmitMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!messageForm.name || !messageForm.email || !messageForm.message) {
+      toast.error('กรุณากรอกข้อมูลให้ครบทุกช่อง');
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    // Show loading toast
+    const loadingToast = toast.loading('กำลังส่งข้อความ...');
+    
+    try {
+      const response = await fetch('/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messageForm),
+      });
+
+      if (response.ok) {
+        toast.success('ส่งข้อความเรียบร้อยแล้ว เราจะติดต่อกลับในไม่ช้า', {
+          id: loadingToast,
+        });
+        setMessageForm({ name: '', email: '', message: '' });
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || 'เกิดข้อผิดพลาดในการส่งข้อความ', {
+          id: loadingToast,
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting message:', error);
+      toast.error('เกิดข้อผิดพลาดในการส่งข้อความ', {
+        id: loadingToast,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] ${ibmPlexSansThai.className}`}>
@@ -56,7 +112,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            สมาคมศิษย์เก่า<br/>โรงเรียนมหิดลวิทยานุสรณ์
+            สมาคมนักเรียนเก่า<br/>โรงเรียนมหิดลวิทยานุสรณ์
           </motion.h1>
           
           <motion.p 
@@ -129,13 +185,13 @@ export default function Home() {
             >
               <h3 className="text-2xl font-bold mb-4 text-yellow-400">พันธกิจของเรา</h3>
               <p className="text-lg mb-6">
-                สมาคมศิษย์เก่าโรงเรียนมหิดลวิทยานุสรณ์ ก่อตั้งขึ้นเพื่อเป็นศูนย์กลางในการเชื่อมโยงศิษย์เก่าทุกรุ่น 
+                สมาคมนักเรียนเก่าโรงเรียนมหิดลวิทยานุสรณ์ ก่อตั้งขึ้นเพื่อเป็นศูนย์กลางในการเชื่อมโยงนักเรียนเก่าทุกรุ่น 
                 สร้างเครือข่ายความร่วมมือ และส่งเสริมการพัฒนาศักยภาพของนักเรียนปัจจุบัน
               </p>
               
               <h3 className="text-2xl font-bold mb-4 text-yellow-400">เป้าหมายของเรา</h3>
               <ul className="space-y-2 mb-6 list-disc pl-5">
-                <li>สร้างชุมชนและเครือข่ายศิษย์เก่าที่เข้มแข็ง</li>
+                <li>สร้างชุมชนและเครือข่ายนักเรียนเก่าที่เข้มแข็ง</li>
                 <li>สนับสนุนการศึกษาและกิจกรรมของนักเรียนปัจจุบัน</li>
                 <li>ส่งเสริมการพัฒนาศักยภาพทางวิชาการและการสร้างนวัตกรรม</li>
                 <li>ร่วมพัฒนาการศึกษาวิทยาศาสตร์และเทคโนโลยีของประเทศ</li>
@@ -317,14 +373,19 @@ export default function Home() {
             >
               <h3 className="text-2xl font-bold mb-6 text-yellow-400">ส่งข้อความถึงเรา</h3>
               
-              <form className="space-y-4">
+              <form onSubmit={handleSubmitMessage} className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block mb-2 font-medium">ชื่อ-นามสกุล</label>
                   <input 
                     type="text" 
-                    id="name" 
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    id="name"
+                    name="name"
+                    value={messageForm.name}
+                    onChange={handleInputChange}
+                    disabled={isSubmitting}
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
                     placeholder="กรอกชื่อ-นามสกุล" 
+                    required
                   />
                 </div>
                 
@@ -332,27 +393,42 @@ export default function Home() {
                   <label htmlFor="email" className="block mb-2 font-medium">อีเมล</label>
                   <input 
                     type="email" 
-                    id="email" 
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    id="email"
+                    name="email"
+                    value={messageForm.email}
+                    onChange={handleInputChange}
+                    disabled={isSubmitting}
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
                     placeholder="กรอกอีเมล" 
+                    required
                   />
                 </div>
                 
                 <div>
                   <label htmlFor="message" className="block mb-2 font-medium">ข้อความ</label>
                   <textarea 
-                    id="message" 
+                    id="message"
+                    name="message"
+                    value={messageForm.message}
+                    onChange={handleInputChange}
+                    disabled={isSubmitting}
                     rows={4} 
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
                     placeholder="กรอกข้อความ"
+                    required
                   ></textarea>
                 </div>
                 
                 <button 
-                  type="submit" 
-                  className="w-full py-3 bg-yellow-400 text-[#204396] font-bold rounded-lg hover:bg-yellow-300 transition duration-300"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full py-3 font-bold rounded-lg transition duration-300 ${
+                    isSubmitting
+                      ? 'bg-yellow-400/50 text-[#204396]/50 cursor-not-allowed'
+                      : 'bg-yellow-400 text-[#204396] hover:bg-yellow-300'
+                  }`}
                 >
-                  ส่งข้อความ
+                  {isSubmitting ? 'กำลังส่ง...' : 'ส่งข้อความ'}
                 </button>
               </form>
             </motion.div>

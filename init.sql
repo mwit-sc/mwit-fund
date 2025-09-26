@@ -109,9 +109,4 @@ CREATE TABLE IF NOT EXISTS users (
 -- Create index on email for faster lookups
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
--- Insert some default admin users (add your admin emails here)
-INSERT INTO users (email, name, role)
-VALUES 
-    ('admin@mwit.ac.th', 'Admin User', 'admin'),
-    ('meaookung144@gmail.com', 'Meaookung Admin', 'admin')
 ON CONFLICT (email) DO UPDATE SET role = EXCLUDED.role;

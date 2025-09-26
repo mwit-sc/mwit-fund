@@ -27,6 +27,124 @@ interface DonationData {
   slip: File | null;
 }
 
+interface Question {
+  id: number;
+  question: string;
+  answer: string;
+  order: number;
+}
+
+function QuestionsSection() {
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
+
+  const fetchQuestions = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/qa/public');
+      if (response.ok) {
+        const data = await response.json();
+        setQuestions(data.slice(0, 5)); // Show only first 5 questions
+      }
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleExpanded = (id: number) => {
+    const newExpanded = new Set(expandedItems);
+    if (newExpanded.has(id)) {
+      newExpanded.delete(id);
+    } else {
+      newExpanded.add(id);
+    }
+    setExpandedItems(newExpanded);
+  };
+
+  if (loading || questions.length === 0) {
+    return null; // Don't show section if loading or no questions
+  }
+
+  return (
+    <section className="py-16 px-4">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg"
+        >
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold mb-4">คำถามที่พบบ่อย</h2>
+            <p className="text-white/80">คำถามและคำตอบเกี่ยวกับกองทุนแบ่งสรรปันน้อง</p>
+          </div>
+          
+          <div className="space-y-4 mb-8">
+            {questions.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-white/5 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10"
+              >
+                <button
+                  onClick={() => toggleExpanded(item.id)}
+                  className="w-full p-4 text-left hover:bg-white/5 transition-colors duration-300 flex justify-between items-center"
+                >
+                  <h3 className="text-lg font-semibold text-white pr-4">
+                    {item.question}
+                  </h3>
+                  <div className={`transform transition-transform duration-300 ${
+                    expandedItems.has(item.id) ? 'rotate-180' : ''
+                  }`}>
+                    <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </button>
+                
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: expandedItems.has(item.id) ? 'auto' : 0,
+                    opacity: expandedItems.has(item.id) ? 1 : 0
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-4 pb-4 border-t border-white/10">
+                    <div className="pt-4">
+                      <p className="text-white/90 leading-relaxed whitespace-pre-wrap">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <Link href="/questions" className="inline-flex items-center px-6 py-3 bg-yellow-400 text-[#204396] font-semibold rounded-lg hover:bg-yellow-300 transition duration-300">
+              <span>ดูคำถามทั้งหมด</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 export default function DonatePage() {
   const { data: session } = useSession();
   const [currentStep, setCurrentStep] = useState(1);
@@ -798,6 +916,9 @@ export default function DonatePage() {
           </motion.div>
         </div>
       )}
+
+      {/* Questions Section */}
+      <QuestionsSection />
     </div>
     </div>
   );

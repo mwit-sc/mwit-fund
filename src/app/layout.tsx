@@ -4,6 +4,7 @@ import Link from "next/link";
 import { IBM_Plex_Sans_Thai } from 'next/font/google';
 import SessionProvider from './components/SessionProvider';
 import Navigation from './components/Navigation';
+import { Toaster } from 'react-hot-toast';
  
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({ subsets: ['thai', 'latin'], weight: ['100','200','300','400','500','600','700'], display: 'swap' });
 
@@ -23,16 +24,47 @@ export default function RootLayout({
         className={`antialiased overflow-x-hidden bg-[#204297] ${ibmPlexSansThai.className}`}
       >
         <SessionProvider>
-          <div className="fixed top-4 lg:top-6 left-1/2 -translate-x-1/2 z-50 text-white w-[calc(100vw-24px-24px)] max-w-[1200px] h-[80px] px-6 py-4 flex justify-between items-center bg-black/40 border-2 border-white/10 rounded-xl backdrop-blur-sm">
-            <Link href="/" className="flex place-items-center">
-              <img src="/img/alumni.png" alt="สมาคมศิษย์เก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์" className="h-12" />
-              <p className="text-lg pl-5">สมาคมศิษย์เก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์</p>
+          <div className="fixed top-4 lg:top-6 left-1/2 -translate-x-1/2 z-50 text-white w-[calc(100vw-24px-24px)] max-w-[1200px] min-h-[80px] px-4 lg:px-6 py-4 flex justify-between items-center bg-black/40 border-2 border-white/10 rounded-xl backdrop-blur-sm">
+            <Link href="/" className="flex place-items-center flex-1 min-w-0">
+              <img src="/img/alumni.png" alt="สมาคมนักเรียนเก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์" className="h-10 lg:h-12 flex-shrink-0" />
+              <p className="text-sm lg:text-lg pl-3 lg:pl-5 truncate">
+                <span className="hidden sm:inline">สมาคมนักเรียนเก่าโรงเรียนมหิดลวิทยานุสรณ์</span>
+                <span className="sm:hidden">สมาคมนักเรียนเก่า MWIT</span>
+              </p>
             </Link>
-            <Navigation />
+            <div className="flex-shrink-0">
+              <Navigation />
+            </div>
           </div>
           <div className="mb-28"></div>
           <div className="text-white   lg:mx-15">{children}</div>
         </SessionProvider>
+        <Toaster 
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#1a367d',
+              color: '#fff',
+              borderRadius: '12px',
+              padding: '16px',
+              fontSize: '14px',
+              fontFamily: 'inherit'
+            },
+            success: {
+              iconTheme: {
+                primary: '#10b981',
+                secondary: '#fff',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
         <div className="bg-gradient-to-r from-[#fde895] from-10% lg:to-[#7c4087] to-[#fde895] to-90%">
           <div className="py-4 px-8 w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-center md:items-start gap-y-4 gap-x-6">
             <img alt="Hello :)" loading="lazy" width="130" decoding="async" data-nimg="1" className="h-20 self-center rounded-xl" style={{ color: "transparent", height: "auto" }} src="/img/alumni.png"/>

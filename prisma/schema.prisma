@@ -1,0 +1,144 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Donation {
+  id                   Int      @id @default(autoincrement())
+  donor_name           String   @db.VarChar(255)
+  generation           String   @db.VarChar(100)
+  amount               Decimal  @default(0) @db.Decimal(10, 2)
+  receipt_name         String?  @db.VarChar(255)
+  donor_email          String?  @db.VarChar(255)
+  tax_id               String?  @db.VarChar(50)
+  address              String?  @db.Text
+  contact_info         String   @db.VarChar(255)
+  publication_consent  PublicationConsent
+  slip_image_url       String?  @db.Text
+  status               DonationStatus @default(pending)
+  created_at           DateTime @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@map("donations")
+}
+
+model DonationStats {
+  id            Int      @id @default(autoincrement())
+  total_amount  Decimal  @default(0) @db.Decimal(10, 2)
+  total_donors  Int      @default(0)
+  target_amount Decimal  @default(750000) @db.Decimal(10, 2)
+  updated_at    DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@map("donation_stats")
+}
+
+model Expense {
+  id           Int         @id @default(autoincrement())
+  title        String      @db.VarChar(255)
+  description  String?     @db.Text
+  amount       Decimal     @db.Decimal(10, 2)
+  expense_type ExpenseType
+  category     String?     @db.VarChar(100)
+  academic_year String     @db.VarChar(10)
+  expense_date DateTime    @db.Date
+  receipt_url  String?     @db.Text
+  created_by   String?     @db.VarChar(255)
+  created_at   DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime    @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@map("expenses")
+}
+
+model YearlyStats {
+  id               Int      @id @default(autoincrement())
+  academic_year    String   @unique @db.VarChar(10)
+  total_donations  Decimal  @default(0) @db.Decimal(10, 2)
+  total_expenses   Decimal  @default(0) @db.Decimal(10, 2)
+  total_income     Decimal  @default(0) @db.Decimal(10, 2)
+  donor_count      Int      @default(0)
+  balance          Decimal  @default(0) @db.Decimal(10, 2)
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@map("yearly_stats")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique @db.VarChar(255)
+  name       String?  @db.VarChar(255)
+  image_url  String?  @db.Text
+  role       UserRole @default(user)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@index([email])
+  @@map("users")
+}
+
+enum PublicationConsent {
+  full
+  name_only
+  anonymous
+}
+
+enum DonationStatus {
+  pending
+  approved
+  rejected
+}
+
+enum ExpenseType {
+  income
+  outcome
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  email      String   @db.VarChar(255)
+  message    String   @db.Text
+  admin_note String?  @db.Text
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  read       Boolean  @default(false)
+
+  @@map("messages")
+}
+
+model Questions {
+  id         Int      @id @default(autoincrement())
+  question   String   @db.Text
+  answer     String   @db.Text
+  order      Int      @default(0)
+  active     Boolean  @default(true)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@map("questions")
+}
+
+model LandingPageContent {
+  id           Int      @id @default(autoincrement())
+  section      String   @db.VarChar(100)
+  title        String?  @db.VarChar(500)
+  content      String?  @db.Text
+  image_url    String?  @db.Text
+  order        Int      @default(0)
+  active       Boolean  @default(true)
+  updated_at   DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+  updated_by   String?  @db.VarChar(255)
+
+  @@map("landing_page_content")
+}
+
+enum UserRole {
+  user
+  admin
+}
