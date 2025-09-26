@@ -11,6 +11,8 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json bun.lockb* yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+# Copy prisma schema for prisma generate in postinstall
+COPY prisma ./prisma
 
 RUN bun install
 
