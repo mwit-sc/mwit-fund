@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import AdminRoute from '../components/AdminRoute';
+import Avatar from '../components/Avatar';
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({ 
   subsets: ['thai', 'latin'], 
@@ -56,10 +57,10 @@ export default function DashboardLayout({
               <div className="flex items-center space-x-4">
                 {session?.user && (
                   <div className="flex items-center space-x-3">
-                    <img 
-                      src={session.user.image || '/img/alumni.png'} 
-                      alt="Profile" 
-                      className="w-10 h-10 rounded-full"
+                    <Avatar 
+                      src={session.user.image} 
+                      name={session.user.name}
+                      size="md"
                     />
                     <div className="text-left">
                       <p className="font-semibold">{session.user.name}</p>

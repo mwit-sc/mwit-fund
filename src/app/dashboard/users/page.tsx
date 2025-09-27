@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import Avatar from '../../components/Avatar';
 
 interface User {
   id: number;
@@ -209,10 +210,11 @@ export default function UsersPage() {
                 >
                   <td className="py-4 px-4">
                     <div className="flex items-center">
-                      <img 
-                        src={user.image_url || '/img/alumni.png'} 
-                        alt={user.name || 'User'} 
-                        className="w-10 h-10 rounded-full mr-3"
+                      <Avatar 
+                        src={user.image_url} 
+                        name={user.name}
+                        size="md"
+                        className="mr-3"
                       />
                       <div>
                         <div className="font-medium text-white">

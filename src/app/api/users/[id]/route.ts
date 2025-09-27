@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/app/lib/prisma';
-import { authOptions } from '../../auth/[...nextauth]/route';
+import { authOptions } from '@/app/lib/auth';
 
 export async function PATCH(
   request: Request,
@@ -10,7 +10,24 @@ export async function PATCH(
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session?.user || (session.user as any)?.role !== 'admin') {
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'ไม่ได้เข้าสู่ระบบ' },
+        { status: 401 }
+      );
+    }
+
+    // Check user role from database if not in session
+    let userRole = (session.user as any)?.role;
+    if (!userRole && session.user.email) {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: { role: true }
+      });
+      userRole = dbUser?.role;
+    }
+    
+    if (userRole !== 'admin') {
       return NextResponse.json(
         { error: 'ไม่มีสิทธิ์ในการเข้าถึง' },
         { status: 403 }
@@ -74,7 +91,24 @@ export async function DELETE(
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session?.user || (session.user as any)?.role !== 'admin') {
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'ไม่ได้เข้าสู่ระบบ' },
+        { status: 401 }
+      );
+    }
+
+    // Check user role from database if not in session
+    let userRole = (session.user as any)?.role;
+    if (!userRole && session.user.email) {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: { role: true }
+      });
+      userRole = dbUser?.role;
+    }
+    
+    if (userRole !== 'admin') {
       return NextResponse.json(
         { error: 'ไม่มีสิทธิ์ในการเข้าถึง' },
         { status: 403 }
