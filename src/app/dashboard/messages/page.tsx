@@ -295,7 +295,7 @@ export default function MessagesPage() {
                         value={noteText}
                         onChange={(e) => setNoteText(e.target.value)}
                         rows={4}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-gray-900 bg-white"
                         placeholder="เพิ่มโน้ตสำหรับการติดตาม หรือข้อมูลเพิ่มเติม..."
                       />
                       <div className="flex space-x-2">

@@ -82,7 +82,7 @@ function QuestionsSection() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg"
         >
-          <div className="text-center mb-8">
+          <div className="text-center mb-2">
             <h2 className="text-2xl font-bold mb-4">คำถามที่พบบ่อย</h2>
             <p className="text-white/80">คำถามและคำตอบเกี่ยวกับกองทุนแบ่งสรรปันน้อง</p>
           </div>

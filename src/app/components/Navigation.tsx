@@ -81,21 +81,21 @@ export default function Navigation() {
           {/* Menu Panel */}
           <div 
             id="mobile-nav"
-            className="absolute top-0 right-0 w-80 max-w-[95vw] h-screen bg-gradient-to-br from-[#204396] via-[#1a3a87] to-[#152a5f] border-l border-white/20 shadow-2xl overflow-hidden transform transition-all duration-500 ease-out animate-in slide-in-from-right"
+            className="absolute top-0 right-0 w-72 max-w-[85vw] h-screen bg-gradient-to-br from-[#204396] via-[#1a3a87] to-[#152a5f] border-l border-white/20 shadow-2xl overflow-hidden transform transition-all duration-500 ease-out animate-in slide-in-from-right"
             style={{
               transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)'
             }}
           >
             {/* Header */}
             <div className="relative bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border-b border-white/20">
-              <div className="flex justify-between items-center p-6">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center mr-3 shadow-lg">
-                    <img src="/img/alumni.png" alt="Alumni" className="w-6 h-6" />
+              <div className="flex justify-between items-center p-4 sm:p-6">
+                <div className="flex items-center min-w-0 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-400 rounded-full flex items-center justify-center mr-2 sm:mr-3 shadow-lg flex-shrink-0">
+                    <img src="/img/alumni.png" alt="Alumni" className="w-4 h-4 sm:w-6 sm:h-6" />
                   </div>
-                  <div>
-                    <h2 className="text-lg font-bold text-white">เมนู</h2>
-                    <p className="text-xs text-white/60">กองทุนช่วยเหลือนักเรียน</p>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="text-base sm:text-lg font-bold text-white truncate">เมนู</h2>
+                    <p className="text-xs text-white/60 truncate">กองทุนช่วยเหลือนักเรียน</p>
                   </div>
                 </div>
                 <button
@@ -116,29 +116,29 @@ export default function Navigation() {
             {/* Menu Content */}
             <div className="flex-1 flex flex-col h-full">
               {/* Primary CTA - Fixed at top */}
-              <div className="px-6 py-6 border-b border-white/10">
+              <div className="px-4 py-4 sm:px-6 sm:py-6 border-b border-white/10">
                 <Link
                   href="/donate"
                   onClick={closeMenu}
                   className="relative block w-full overflow-hidden group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 animate-pulse"></div>
-                  <div className="relative px-6 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-[#204396] font-bold rounded-2xl text-center transition-all duration-300 hover:shadow-2xl transform hover:scale-[0.98] touch-manipulation shadow-lg group-hover:shadow-yellow-400/25">
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 animate-pulse rounded-2xl"></div>
+                  <div className="relative px-4 py-3 sm:px-6 sm:py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-[#204396] font-bold rounded-2xl text-center transition-all duration-300 hover:shadow-2xl transform hover:scale-[0.98] touch-manipulation shadow-lg group-hover:shadow-yellow-400/25">
                     <div className="flex items-center justify-center">
-                      <div className="w-6 h-6 bg-[#204396]/20 rounded-full flex items-center justify-center mr-3 group-hover:rotate-12 transition-transform duration-300">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-[#204396]/20 rounded-full flex items-center justify-center mr-2 sm:mr-3 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0">
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                         </svg>
                       </div>
-                      <span className="text-lg">บริจาคเดี่ยวนี้</span>
-                      <div className="ml-2 text-xl animate-bounce">💝</div>
+                      <span className="text-base sm:text-lg">บริจาคเดี่ยวนี้</span>
+                      <div className="ml-1 sm:ml-2 text-lg sm:text-xl animate-bounce">💝</div>
                     </div>
                   </div>
                 </Link>
               </div>
 
               {/* Menu Items - Scrollable */}
-              <div className="flex-1 overflow-y-auto px-6 py-6 space-y-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+              <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6 space-y-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                 {/* About Fund Section */}
                 <div className="mb-8">
                   <div className="px-4 py-3 mb-4 bg-gradient-to-r from-yellow-400/10 to-yellow-500/10 rounded-xl border border-yellow-400/20">
@@ -156,18 +156,18 @@ export default function Navigation() {
                     <Link
                       href="/questions"
                       onClick={closeMenu}
-                      className="flex items-center px-4 py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
+                      className="flex items-center px-3 py-3 sm:px-4 sm:py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
                     >
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-xl flex items-center justify-center mr-4 group-hover:bg-gradient-to-br group-hover:from-blue-400/40 group-hover:to-blue-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg">
-                        <svg className="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-xl flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-gradient-to-br group-hover:from-blue-400/40 group-hover:to-blue-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg flex-shrink-0">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
-                      <div className="flex-1">
-                        <span className="font-semibold text-base">คำถามที่พบบ่อย</span>
-                        <p className="text-xs text-white/60 mt-1">คำถามที่มักถูกเกี่ยวกับกองทุน</p>
+                      <div className="flex-1 min-w-0">
+                        <span className="font-semibold text-sm sm:text-base truncate block">คำถามที่พบบ่อย</span>
+                        <p className="text-xs text-white/60 mt-1 truncate">คำถามที่มักถูกเกี่ยวกับกองทุน</p>
                       </div>
-                      <svg className="w-5 h-5 text-white/40 group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/40 group-hover:text-yellow-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
@@ -175,18 +175,18 @@ export default function Navigation() {
                     <Link
                       href="/#about"
                       onClick={closeMenu}
-                      className="flex items-center px-4 py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
+                      className="flex items-center px-3 py-3 sm:px-4 sm:py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
                     >
-                      <div className="w-10 h-10 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-xl flex items-center justify-center mr-4 group-hover:bg-gradient-to-br group-hover:from-green-400/40 group-hover:to-green-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg">
-                        <svg className="w-5 h-5 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-xl flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-gradient-to-br group-hover:from-green-400/40 group-hover:to-green-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg flex-shrink-0">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
-                      <div className="flex-1">
-                        <span className="font-semibold text-base">เกี่ยวกับกองทุน</span>
-                        <p className="text-xs text-white/60 mt-1">รู้จักประวัติและวัตถุประสงค์</p>
+                      <div className="flex-1 min-w-0">
+                        <span className="font-semibold text-sm sm:text-base truncate block">เกี่ยวกับกองทุน</span>
+                        <p className="text-xs text-white/60 mt-1 truncate">รู้จักประวัติและวัตถุประสงค์</p>
                       </div>
-                      <svg className="w-5 h-5 text-white/40 group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/40 group-hover:text-yellow-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
@@ -194,18 +194,37 @@ export default function Navigation() {
                     <Link
                       href="/#contact"
                       onClick={closeMenu}
-                      className="flex items-center px-4 py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
+                      className="flex items-center px-3 py-3 sm:px-4 sm:py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
                     >
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500/30 to-purple-600/20 rounded-xl flex items-center justify-center mr-4 group-hover:bg-gradient-to-br group-hover:from-purple-400/40 group-hover:to-purple-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg">
-                        <svg className="w-5 h-5 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500/30 to-purple-600/20 rounded-xl flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-gradient-to-br group-hover:from-purple-400/40 group-hover:to-purple-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg flex-shrink-0">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                       </div>
-                      <div className="flex-1">
-                        <span className="font-semibold text-base">ติดต่อเรา</span>
-                        <p className="text-xs text-white/60 mt-1">สอบถามและติดต่อทีมงาน</p>
+                      <div className="flex-1 min-w-0">
+                        <span className="font-semibold text-sm sm:text-base truncate block">ติดต่อเรา</span>
+                        <p className="text-xs text-white/60 mt-1 truncate">สอบถามและติดต่อทีมงาน</p>
                       </div>
-                      <svg className="w-5 h-5 text-white/40 group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/40 group-hover:text-yellow-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                    
+                    <Link
+                      href="/blog"
+                      onClick={closeMenu}
+                      className="flex items-center px-3 py-3 sm:px-4 sm:py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
+                    >
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-indigo-500/30 to-indigo-600/20 rounded-xl flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-gradient-to-br group-hover:from-indigo-400/40 group-hover:to-indigo-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg flex-shrink-0">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="font-semibold text-sm sm:text-base truncate block">บทความและข่าวสาร</span>
+                        <p className="text-xs text-white/60 mt-1 truncate">อ่านบทความและข้อมูลข่าวสาร</p>
+                      </div>
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/40 group-hover:text-yellow-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
@@ -213,18 +232,18 @@ export default function Navigation() {
                     <Link
                       href="/stats"
                       onClick={closeMenu}
-                      className="flex items-center px-4 py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
+                      className="flex items-center px-3 py-3 sm:px-4 sm:py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
                     >
-                      <div className="w-10 h-10 bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 rounded-xl flex items-center justify-center mr-4 group-hover:bg-gradient-to-br group-hover:from-cyan-400/40 group-hover:to-cyan-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg">
-                        <svg className="w-5 h-5 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 rounded-xl flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-gradient-to-br group-hover:from-cyan-400/40 group-hover:to-cyan-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg flex-shrink-0">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                       </div>
-                      <div className="flex-1">
-                        <span className="font-semibold text-base">รายรับ-รายจ่าย</span>
-                        <p className="text-xs text-white/60 mt-1">ดูสถิติการเงินของกองทุน</p>
+                      <div className="flex-1 min-w-0">
+                        <span className="font-semibold text-sm sm:text-base truncate block">รายรับ-รายจ่าย</span>
+                        <p className="text-xs text-white/60 mt-1 truncate">ดูสถิติการเงินของกองทุน</p>
                       </div>
-                      <svg className="w-5 h-5 text-white/40 group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/40 group-hover:text-yellow-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
@@ -249,18 +268,18 @@ export default function Navigation() {
                       <Link
                         href="/my-donations"
                         onClick={closeMenu}
-                        className="flex items-center px-4 py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
+                        className="flex items-center px-3 py-3 sm:px-4 sm:py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1"
                       >
-                        <div className="w-10 h-10 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-xl flex items-center justify-center mr-4 group-hover:bg-gradient-to-br group-hover:from-orange-400/40 group-hover:to-orange-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg">
-                          <svg className="w-5 h-5 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-xl flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-gradient-to-br group-hover:from-orange-400/40 group-hover:to-orange-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg flex-shrink-0">
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                           </svg>
                         </div>
-                        <div className="flex-1">
-                          <span className="font-semibold text-base">การบริจาคของฉัน</span>
-                          <p className="text-xs text-white/60 mt-1">ดูประวัติการบริจาคของคุณ</p>
+                        <div className="flex-1 min-w-0">
+                          <span className="font-semibold text-sm sm:text-base truncate block">การบริจาคของฉัน</span>
+                          <p className="text-xs text-white/60 mt-1 truncate">ดูประวัติการบริจาคของคุณ</p>
                         </div>
-                        <svg className="w-5 h-5 text-white/40 group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/40 group-hover:text-yellow-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </Link>
@@ -269,22 +288,22 @@ export default function Navigation() {
                         <Link
                           href="/dashboard"
                           onClick={closeMenu}
-                          className="relative flex items-center px-4 py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1 overflow-hidden"
+                          className="relative flex items-center px-3 py-3 sm:px-4 sm:py-4 text-white hover:text-yellow-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-2xl transition-all duration-300 touch-manipulation group transform hover:scale-[1.02] hover:translate-x-1 overflow-hidden"
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className="relative w-10 h-10 bg-gradient-to-br from-red-500/30 to-red-600/20 rounded-xl flex items-center justify-center mr-4 group-hover:bg-gradient-to-br group-hover:from-red-400/40 group-hover:to-red-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg">
-                            <svg className="w-5 h-5 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <div className="relative w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-500/30 to-red-600/20 rounded-xl flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-gradient-to-br group-hover:from-red-400/40 group-hover:to-red-500/30 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-lg flex-shrink-0">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                             </svg>
                           </div>
-                          <div className="relative flex-1">
+                          <div className="relative flex-1 min-w-0">
                             <div className="flex items-center">
-                              <span className="font-semibold text-base">แดชบอร์ดผู้ดูแล</span>
-                              <span className="ml-2 px-2 py-0.5 bg-red-500/20 text-red-300 text-xs rounded-full border border-red-500/30">แอดมิน</span>
+                              <span className="font-semibold text-sm sm:text-base truncate">แดชบอร์ดผู้ดูแล</span>
+                              <span className="ml-1 sm:ml-2 px-1.5 py-0.5 bg-red-500/20 text-red-300 text-xs rounded-full border border-red-500/30 flex-shrink-0">แอดมิน</span>
                             </div>
-                            <p className="text-xs text-white/60 mt-1">จัดการระบบและข้อมูล</p>
+                            <p className="text-xs text-white/60 mt-1 truncate">จัดการระบบและข้อมูล</p>
                           </div>
-                          <svg className="relative w-5 h-5 text-white/40 group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="relative w-4 h-4 sm:w-5 sm:h-5 text-white/40 group-hover:text-yellow-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                         </Link>
@@ -295,24 +314,24 @@ export default function Navigation() {
               </div>
 
               {/* User Profile Section - Fixed at bottom */}
-              <div className="px-6 py-6 border-t border-white/20 bg-gradient-to-r from-white/10 via-white/5 to-white/10 backdrop-blur-sm">
+              <div className="px-4 py-4 sm:px-6 sm:py-6 border-t border-white/20 bg-gradient-to-r from-white/10 via-white/5 to-white/10 backdrop-blur-sm">
                 {session ? (
                   <div className="space-y-5">
                     {/* Profile Info */}
-                    <div className="relative flex items-center px-5 py-4 bg-gradient-to-r from-white/15 to-white/10 rounded-2xl border border-white/20 shadow-lg overflow-hidden">
+                    <div className="relative flex items-center px-3 py-3 sm:px-5 sm:py-4 bg-gradient-to-r from-white/15 to-white/10 rounded-2xl border border-white/20 shadow-lg overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/5 to-blue-400/5 opacity-50"></div>
                       <Avatar 
                         src={session.user?.image} 
                         name={session.user?.name}
-                        size="lg"
-                        className="mr-4 ring-2 ring-yellow-400/30 shadow-lg relative z-10"
+                        size="md"
+                        className="mr-3 sm:mr-4 ring-2 ring-yellow-400/30 shadow-lg relative z-10 flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0 relative z-10">
-                        <p className="text-white font-bold text-lg truncate flex items-center">
+                        <p className="text-white font-bold text-base sm:text-lg truncate flex items-center">
                           {getFirstName(session.user?.name)}
                           <span className="ml-2 text-yellow-400">✨</span>
                         </p>
-                        <p className="text-white/70 text-sm truncate">{session.user?.email}</p>
+                        <p className="text-white/70 text-xs sm:text-sm truncate">{session.user?.email}</p>
                         <div className="flex items-center mt-1">
                           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2"></div>
                           <span className="text-xs text-green-300 font-medium">ออนไลน์</span>

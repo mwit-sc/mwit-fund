@@ -54,7 +54,7 @@ export default function QuestionsPage() {
   return (
     <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] ${ibmPlexSansThai.className}`}>
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="pt-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
