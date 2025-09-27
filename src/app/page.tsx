@@ -5,6 +5,7 @@ import { IBM_Plex_Sans_Thai } from 'next/font/google';
 import { useEffect, useState } from "react";
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import Turnstile from './components/Turnstile';
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({ 
   subsets: ['thai', 'latin'], 
@@ -20,6 +21,8 @@ export default function Home() {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileReset, setTurnstileReset] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,18 +49,44 @@ export default function Home() {
       return;
     }
 
+    if (!turnstileToken) {
+      toast.error('กรุณายืนยันว่าคุณไม่ใช่โปรแกรมอัตโนมัติ');
+      return;
+    }
+
     setIsSubmitting(true);
     
     // Show loading toast
     const loadingToast = toast.loading('กำลังส่งข้อความ...');
     
     try {
+      // First verify Turnstile token
+      const turnstileVerify = await fetch('/api/verify-turnstile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: turnstileToken }),
+      });
+
+      if (!turnstileVerify.ok) {
+        const verifyError = await turnstileVerify.json();
+        toast.error(verifyError.error || 'การยืนยันความปลอดภัยล้มเหลว', {
+          id: loadingToast,
+        });
+        return;
+      }
+
+      // If Turnstile verification passed, submit the message
       const response = await fetch('/api/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(messageForm),
+        body: JSON.stringify({
+          ...messageForm,
+          turnstileToken
+        }),
       });
 
       if (response.ok) {
@@ -65,6 +94,10 @@ export default function Home() {
           id: loadingToast,
         });
         setMessageForm({ name: '', email: '', message: '' });
+        setTurnstileToken(null);
+        setTurnstileReset(true);
+        // Reset the turnstile reset flag after a brief delay
+        setTimeout(() => setTurnstileReset(false), 100);
       } else {
         const errorData = await response.json();
         toast.error(errorData.error || 'เกิดข้อผิดพลาดในการส่งข้อความ', {
@@ -295,7 +328,7 @@ export default function Home() {
       </div>
 
       {/* Contact Section */}
-      <div className="py-20 px-4 md:px-8">
+      <div id="contact" className="py-20 px-4 md:px-8">
         <div className="max-w-6xl mx-auto text-white">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">ติดต่อเรา</h2>
@@ -417,6 +450,17 @@ export default function Home() {
                     placeholder="กรอกข้อความ"
                     required
                   ></textarea>
+                </div>
+                
+                <div className="mb-4">
+                  <Turnstile
+                    onVerify={setTurnstileToken}
+                    onError={() => setTurnstileToken(null)}
+                    onExpire={() => setTurnstileToken(null)}
+                    theme="dark"
+                    className="flex justify-center"
+                    reset={turnstileReset}
+                  />
                 </div>
                 
                 <button 

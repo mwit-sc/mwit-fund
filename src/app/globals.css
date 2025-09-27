@@ -21,3 +21,14 @@ body {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap');
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset for fixed navigation */
+#about,
+#contact {
+  scroll-margin-top: 120px;
+}

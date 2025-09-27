@@ -18,6 +18,8 @@ const navigation = [
   { name: 'การบริจาค', href: '/dashboard/donations', icon: '💰' },
   { name: 'ข้อความ', href: '/dashboard/messages', icon: '💬' },
   { name: 'จัดการผู้ใช้', href: '/dashboard/users', icon: '👥' },
+  { name: 'บทความ', href: '/dashboard/blog', icon: '📰' },
+  { name: 'ลิงก์สั้น', href: '/dashboard/short-links', icon: '🔗' },
   { name: 'จัดการเนื้อหา', href: '/dashboard/content', icon: '📝' },
   { name: 'คำถาม-คำตอบ', href: '/dashboard/qa', icon: '❓' },
 ];

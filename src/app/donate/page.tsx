@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { IBM_Plex_Sans_Thai } from 'next/font/google';
 import { useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
+import Turnstile from '../components/Turnstile';
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({ 
   subsets: ['thai', 'latin'], 
@@ -169,6 +171,8 @@ export default function DonatePage() {
   const [slipPreview, setSlipPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileReset, setTurnstileReset] = useState(false);
   const [stats, setStats] = useState({
     totalDonation: 0,
     totalDonors: 0,
@@ -270,6 +274,30 @@ export default function DonatePage() {
         throw new Error('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน (ช่องที่มีเครื่องหมาย *)');
       }
 
+      if (!turnstileToken) {
+        throw new Error('กรุณายืนยันว่าคุณไม่ใช่โปรแกรมอัตโนมัติ');
+      }
+
+      // Show loading toast
+      const loadingToast = toast.loading('กำลังประมวลผลการบริจาค...');
+
+      // First verify Turnstile token
+      const turnstileVerify = await fetch('/api/verify-turnstile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: turnstileToken }),
+      });
+
+      if (!turnstileVerify.ok) {
+        const verifyError = await turnstileVerify.json();
+        toast.error(verifyError.error || 'การยืนยันความปลอดภัยล้มเหลว', {
+          id: loadingToast,
+        });
+        return;
+      }
+
       // Upload slip image to Cloudflare R2
       let slipUrl = null;
       if (donationData.slip) {
@@ -296,13 +324,22 @@ export default function DonatePage() {
         },
         body: JSON.stringify({
           donationData,
-          slipImageUrl: slipUrl
+          slipImageUrl: slipUrl,
+          turnstileToken
         }),
       });
 
       if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.error || 'เกิดข้อผิดพลาดในการส่งข้อมูล', {
+          id: loadingToast,
+        });
         throw new Error('Failed to submit donation');
       }
+
+      toast.success('บริจาคสำเร็จ! ขอบคุณสำหรับการสนับสนุน', {
+        id: loadingToast,
+      });
 
       setSubmitSuccess(true);
       setCurrentStep(3);
@@ -319,6 +356,10 @@ export default function DonatePage() {
         slip: null
       });
       setSlipPreview(null);
+      setTurnstileToken(null);
+      setTurnstileReset(true);
+      // Reset the turnstile reset flag after a brief delay
+      setTimeout(() => setTurnstileReset(false), 100);
       
       // Clear localStorage
       if (typeof window !== 'undefined') {
@@ -725,6 +766,20 @@ export default function DonatePage() {
                 )}
               </div>
               
+              <div className="mb-6">
+                <label className="block mb-2 font-medium">
+                  ยืนยันตัวตน <span className="text-yellow-400">*</span>
+                </label>
+                <Turnstile
+                  onVerify={setTurnstileToken}
+                  onError={() => setTurnstileToken(null)}
+                  onExpire={() => setTurnstileToken(null)}
+                  theme="dark"
+                  className="flex justify-center"
+                  reset={turnstileReset}
+                />
+              </div>
+
               {submitError && (
                 <div className="bg-red-500/20 text-red-100 p-3 rounded-lg">
                   {submitError}
@@ -741,9 +796,9 @@ export default function DonatePage() {
                 </button>
                 <button 
                   type="submit" 
-                  disabled={isSubmitting || !donationData.slip}
+                  disabled={isSubmitting || !donationData.slip || !turnstileToken}
                   className={`w-1/2 py-3 font-bold rounded-lg transition duration-300 ${
-                    isSubmitting || !donationData.slip
+                    isSubmitting || !donationData.slip || !turnstileToken
                       ? 'bg-yellow-400/50 text-[#204396]/50 cursor-not-allowed'
                       : 'bg-yellow-400 text-[#204396] hover:bg-yellow-300'
                   }`}

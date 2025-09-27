@@ -71,13 +71,15 @@ model YearlyStats {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique @db.VarChar(255)
-  name       String?  @db.VarChar(255)
-  image_url  String?  @db.Text
-  role       UserRole @default(user)
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+  id         Int         @id @default(autoincrement())
+  email      String      @unique @db.VarChar(255)
+  name       String?     @db.VarChar(255)
+  image_url  String?     @db.Text
+  role       UserRole    @default(user)
+  created_at DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at DateTime    @default(now()) @updatedAt @db.Timestamptz(6)
+  blog_posts BlogPost[]
+  short_links ShortLink[]
 
   @@index([email])
   @@map("users")
@@ -141,4 +143,62 @@ model LandingPageContent {
 enum UserRole {
   user
   admin
+}
+
+model BlogPost {
+  id              Int          @id @default(autoincrement())
+  title           String       @db.VarChar(500)
+  slug            String       @unique @db.VarChar(500)
+  content         String       @db.Text
+  excerpt         String?      @db.Text
+  thumbnail_url   String?      @db.Text
+  status          BlogStatus   @default(draft)
+  published_at    DateTime?    @db.Timestamptz(6)
+  created_at      DateTime     @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime     @default(now()) @updatedAt @db.Timestamptz(6)
+  author_id       Int
+  author          User         @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  images          BlogImage[]
+  
+  @@index([status])
+  @@index([published_at])
+  @@index([slug])
+  @@map("blog_posts")
+}
+
+model BlogImage {
+  id           Int      @id @default(autoincrement())
+  blog_post_id Int
+  image_url    String   @db.Text
+  alt_text     String?  @db.VarChar(255)
+  order        Int      @default(0)
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  blog_post    BlogPost @relation(fields: [blog_post_id], references: [id], onDelete: Cascade)
+  
+  @@index([blog_post_id])
+  @@map("blog_images")
+}
+
+enum BlogStatus {
+  draft
+  published
+  archived
+}
+
+model ShortLink {
+  id         Int      @id @default(autoincrement())
+  short_code String   @unique @db.VarChar(20)
+  target_url String   @db.Text
+  title      String?  @db.VarChar(255)
+  clicks     Int      @default(0)
+  active     Boolean  @default(true)
+  created_by Int
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+  expires_at DateTime? @db.Timestamptz(6)
+  creator    User     @relation(fields: [created_by], references: [id], onDelete: Cascade)
+  
+  @@index([short_code])
+  @@index([created_by])
+  @@map("short_links")
 }

@@ -19,12 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         className={`antialiased overflow-x-hidden bg-[#204297] ${ibmPlexSansThai.className}`}
       >
         <SessionProvider>
-          <div className="fixed top-4 lg:top-6 left-1/2 -translate-x-1/2 z-50 text-white w-[calc(100vw-24px-24px)] max-w-[1200px] min-h-[80px] px-4 lg:px-6 py-4 flex justify-between items-center bg-black/40 border-2 border-white/10 rounded-xl backdrop-blur-sm overflow-visible">
+          <div className="fixed top-2 lg:top-6 left-1/2 -translate-x-1/2 z-50 text-white w-[calc(100vw-16px)] lg:w-[calc(100vw-48px)] max-w-[1200px] lg:min-h-[80px] px-3 lg:px-6 py-3 lg:py-4 flex justify-between items-center bg-black/40 border-2 border-white/10 rounded-xl backdrop-blur-sm overflow-visible">
             <Link href="/" className="flex place-items-center flex-1 min-w-0">
               <img src="/img/alumni.png" alt="สมาคมนักเรียนเก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์" className="h-10 lg:h-12 flex-shrink-0" />
               <p className="text-sm lg:text-lg pl-3 lg:pl-5 truncate">
@@ -36,7 +36,7 @@ export default function RootLayout({
               <Navigation />
             </div>
           </div>
-          <div className="mb-28"></div>
+          <div className="mb-20 lg:mb-28"></div>
           <div className="text-white   lg:mx-15">{children}</div>
         </SessionProvider>
         <Toaster 
