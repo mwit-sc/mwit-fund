@@ -398,15 +398,6 @@ export default function StatsPage() {
           transition={{ delay: 0.5 }}
           className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
         >
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold">รายละเอียดรายรับ-รายจ่าย ปี {selectedYear}</h3>
-            <Link
-              href="/dashboard"
-              className="px-4 py-2 bg-yellow-400 text-[#204396] font-semibold rounded-lg hover:bg-yellow-300 transition"
-            >
-              จัดการข้อมูล
-            </Link>
-          </div>
           
           <div className="overflow-x-auto">
             <table className="w-full text-left">

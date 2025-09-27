@@ -532,9 +532,204 @@ export default function DonationsPage() {
         </div>
       </motion.div>
 
-      {/* Donation Detail Modal - I'll add this later to keep file manageable */}
-      
-      {/* Status Change Modal - I'll add this later to keep file manageable */}
+      {/* Donation Detail Modal */}
+      {showDetailModal && selectedDonation && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+          >
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-2xl font-bold text-gray-900">รายละเอียดการบริจาค</h3>
+                <button
+                  onClick={() => setShowDetailModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600">ชื่อผู้บริจาค</label>
+                  <p className="mt-1 text-lg font-semibold text-gray-900">{selectedDonation.donor_name}</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-600">รุ่น</label>
+                  <p className="mt-1 text-lg text-gray-900">รุ่น {selectedDonation.generation}</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-600">จำนวนเงิน</label>
+                  <p className="mt-1 text-lg font-semibold text-green-600">{selectedDonation.amount.toLocaleString()} บาท</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-600">วันที่บริจาค</label>
+                  <p className="mt-1 text-lg text-gray-900">{new Date(selectedDonation.created_at).toLocaleDateString('th-TH', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-600">สถานะ</label>
+                  <span className={`inline-block mt-1 px-3 py-1 rounded-full text-sm font-medium ${
+                    selectedDonation.status === 'approved' ? 'bg-green-100 text-green-800' :
+                    selectedDonation.status === 'rejected' ? 'bg-red-100 text-red-800' :
+                    'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {selectedDonation.status === 'approved' ? 'อนุมัติแล้ว' :
+                     selectedDonation.status === 'rejected' ? 'ปฏิเสธ' : 'รอดำเนินการ'}
+                  </span>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-600">ช่องทางติดต่อ</label>
+                  <p className="mt-1 text-lg text-gray-900">{selectedDonation.contact_info}</p>
+                </div>
+              </div>
+
+              {selectedDonation.donor_email && (
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-600">อีเมล</label>
+                  <p className="mt-1 text-lg text-blue-600">
+                    <a href={`mailto:${selectedDonation.donor_email}`} className="hover:underline">
+                      {selectedDonation.donor_email}
+                    </a>
+                  </p>
+                </div>
+              )}
+
+              {selectedDonation.receipt_name && (
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-600">ใบเสร็จในนาม</label>
+                  <p className="mt-1 text-lg text-gray-900">{selectedDonation.receipt_name}</p>
+                </div>
+              )}
+
+              {selectedDonation.tax_id && (
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-600">เลขประจำตัวผู้เสียภาษี</label>
+                  <p className="mt-1 text-lg text-gray-900">{selectedDonation.tax_id}</p>
+                </div>
+              )}
+
+              {selectedDonation.address && (
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-600">ที่อยู่</label>
+                  <p className="mt-1 text-lg text-gray-900 whitespace-pre-wrap">{selectedDonation.address}</p>
+                </div>
+              )}
+
+              {selectedDonation.slip_image_url && (
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-600 mb-3">หลักฐานการโอนเงิน</label>
+                  <div className="bg-gray-50 rounded-lg p-4 max-w-md">
+                    <img 
+                      src={selectedDonation.slip_image_url} 
+                      alt="หลักฐานการโอนเงิน" 
+                      className="w-full h-auto rounded-lg shadow-md"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                {selectedDonation.status === 'pending' && (
+                  <>
+                    <button
+                      onClick={() => openStatusChangeModal(selectedDonation)}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    >
+                      เปลี่ยนสถานะ
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={() => setShowDetailModal(false)}
+                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
+                >
+                  ปิด
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Status Change Modal */}
+      {showStatusChangeModal && statusChangeData.donation && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white rounded-xl shadow-xl max-w-md w-full"
+          >
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-bold text-gray-900">เปลี่ยนสถานะการบริจาค</h3>
+                <button
+                  onClick={() => setShowStatusChangeModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-gray-600">การบริจาคของ: <span className="font-semibold">{statusChangeData.donation.donor_name}</span></p>
+                <p className="text-gray-600">จำนวน: <span className="font-semibold">{statusChangeData.donation.amount.toLocaleString()} บาท</span></p>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-600 mb-2">เปลี่ยนสถานะเป็น:</label>
+                <select
+                  value={statusChangeData.newStatus}
+                  onChange={(e) => setStatusChangeData(prev => ({ ...prev, newStatus: e.target.value as 'pending' | 'approved' | 'rejected' }))}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="pending">รอดำเนินการ</option>
+                  <option value="approved">อนุมัติ</option>
+                  <option value="rejected">ปฏิเสธ</option>
+                </select>
+              </div>
+
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => handleStatusChange(statusChangeData.donation.id, statusChangeData.newStatus)}
+                  disabled={submitting}
+                  className={`flex-1 py-2 px-4 rounded-lg font-medium transition ${
+                    submitting
+                      ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                  }`}
+                >
+                  {submitting ? 'กำลังบันทึก...' : 'บันทึก'}
+                </button>
+                <button
+                  onClick={() => setShowStatusChangeModal(false)}
+                  className="flex-1 py-2 px-4 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
+                >
+                  ยกเลิก
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
