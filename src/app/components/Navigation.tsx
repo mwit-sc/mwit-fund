@@ -116,7 +116,7 @@ export default function Navigation() {
             {/* Menu Content */}
             <div className="flex-1 flex flex-col h-full">
               {/* Primary CTA - Fixed at top */}
-              <div className="px-4 py-4 sm:px-6 sm:py-6 border-b border-white/10">
+              <div className="px-4 py-3 sm:px-6 sm:py-4 border-b border-white/10">
                 <Link
                   href="/donate"
                   onClick={closeMenu}
@@ -130,7 +130,7 @@ export default function Navigation() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                         </svg>
                       </div>
-                      <span className="text-base sm:text-lg">บริจาคเดี่ยวนี้</span>
+                      <span className="text-base sm:text-lg">บริจาคเลย</span>
                       <div className="ml-1 sm:ml-2 text-lg sm:text-xl animate-bounce">💝</div>
                     </div>
                   </div>
@@ -138,9 +138,9 @@ export default function Navigation() {
               </div>
 
               {/* Menu Items - Scrollable */}
-              <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6 space-y-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+              <div className="flex-1 overflow-y-auto px-4 py-3 sm:px-6 sm:py-4 space-y-1 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                 {/* About Fund Section */}
-                <div className="mb-8">
+                <div className="mb-6">
                   <div className="px-4 py-3 mb-4 bg-gradient-to-r from-yellow-400/10 to-yellow-500/10 rounded-xl border border-yellow-400/20">
                     <h3 className="text-yellow-300 font-bold text-sm uppercase tracking-wider flex items-center">
                       <div className="w-6 h-6 bg-yellow-400/20 rounded-lg flex items-center justify-center mr-3">
@@ -271,7 +271,7 @@ export default function Navigation() {
 
                 {/* User Menu - Only if logged in */}
                 {session && (
-                  <div className="mb-8">
+                  <div className="mb-6">
                     <div className="px-4 py-3 mb-4 bg-gradient-to-r from-emerald-400/10 to-emerald-500/10 rounded-xl border border-emerald-400/20">
                       <h3 className="text-emerald-300 font-bold text-sm uppercase tracking-wider flex items-center">
                         <div className="w-6 h-6 bg-emerald-400/20 rounded-lg flex items-center justify-center mr-3">
@@ -352,9 +352,9 @@ export default function Navigation() {
               </div>
 
               {/* User Profile Section - Fixed at bottom */}
-              <div className="px-4 py-4 sm:px-6 sm:py-6 border-t border-white/20 bg-gradient-to-r from-white/10 via-white/5 to-white/10 backdrop-blur-sm">
+              <div className="px-4 py-3 sm:px-6 sm:py-4 border-t border-white/20 bg-gradient-to-r from-white/10 via-white/5 to-white/10 backdrop-blur-sm">
                 {session ? (
-                  <div className="space-y-5">
+                  <div className="space-y-3">
                     {/* Profile Info */}
                     <div className="relative flex items-center px-3 py-3 sm:px-5 sm:py-4 bg-gradient-to-r from-white/15 to-white/10 rounded-2xl border border-white/20 shadow-lg overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/5 to-blue-400/5 opacity-50"></div>
@@ -395,7 +395,7 @@ export default function Navigation() {
                     </button>
                   </div>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <div className="text-center">
                       <div className="w-16 h-16 bg-gradient-to-br from-yellow-400/20 to-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-3 border border-yellow-400/30">
                         <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
