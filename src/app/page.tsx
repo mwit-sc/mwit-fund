@@ -139,14 +139,14 @@ export default function Home() {
             />
           </motion.div>
           
-          <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-4"
+            <motion.h1 
+            className="text-2xl md:text-6xl font-bold mb-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-          >
+            >
             สมาคมนักเรียนเก่า<br/>โรงเรียนมหิดลวิทยานุสรณ์
-          </motion.h1>
+            </motion.h1>
           
           <motion.p 
             className="text-xl md:text-2xl max-w-2xl mb-8"
@@ -154,7 +154,6 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            เชื่อมโยงอดีต สร้างสรรค์ปัจจุบัน เพื่ออนาคตที่ยั่งยืน
           </motion.p>
           
           <motion.div
