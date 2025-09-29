@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /etc/cert/fullchain.crt
+      keyFile: /etc/cert/privkey.key

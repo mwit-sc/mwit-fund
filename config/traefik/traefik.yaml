@@ -52,13 +52,3 @@ providers:
   file:
     directory: /dynamic
     watch: true
-
-certificatesResolvers:
-  letsencrypt:
-    acme:
-      email: admin@mwit.link
-      storage: le.json
-      caServer: https://acme-v02.api.letsencrypt.org/directory # prod (default)
-      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory # staging
-      httpchallenge:
-        entryPoint: http

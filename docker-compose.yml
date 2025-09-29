@@ -26,7 +26,6 @@ services:
       - "traefik.http.routers.mwit-fund-secure.entrypoints=https"
       - "traefik.http.routers.mwit-fund-secure.rule=Host(`alumni.mwit.ac.th`)"
       - "traefik.http.routers.mwit-fund-secure.tls=true"
-      - "traefik.http.routers.mwit-fund-secure.tls.certresolver=letsencrypt"
   postgres:
     image: postgres:15
     container_name: mwit-fund-db
@@ -62,7 +61,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /srv/certs/le.json:/le.json
+      - /home/alumni/cert:/etc/cert
       - ./config/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
       - ./config/traefik/dynamic:/dynamic:ro
 
