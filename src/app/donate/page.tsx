@@ -972,6 +972,115 @@ export default function DonatePage() {
         </div>
       )}
 
+      {/* Scholarship Committee Section */}
+      <div className="max-w-6xl mx-auto mt-20 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg"
+        >
+          <h2 className="text-2xl font-bold mb-6 text-center text-yellow-400">คณะกรรมการพิจารณาทุน</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">1. ดร.สาโรจน์ บุญเส็ง</p>
+              <p className="text-sm text-white/80">หัวหน้าฝ่ายบริหารการเรียนรู้และระบบโรงเรียนประจำ (ประธาน)</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">2. ดร.สุพรรณี เชื้อนุ่น</p>
+              <p className="text-sm text-white/80">หัวหน้างานวิชาการ</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">3. นางสาวรัตนา สุขสำราญ</p>
+              <p className="text-sm text-white/80">หัวหน้างานกิจการนักเรียน</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">4. ดร.ธรรมนูญ ผุยรอด</p>
+              <p className="text-sm text-white/80">หัวหน้าครูที่ปรึกษาระดับชั้น ม.6</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">5. นางสาวนิธิกานต์ คิมอิ๋ง</p>
+              <p className="text-sm text-white/80">หัวหน้าครูที่ปรึกษาระดับชั้น ม.5</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">6. ดร.สมพร บัวประทุม</p>
+              <p className="text-sm text-white/80">หัวหน้าครูที่ปรึกษาระดับชั้น ม.4</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">7. นางทิพนาถ น้อยแก้ว</p>
+              <p className="text-sm text-white/80">รองหัวหน้าครูที่ปรึกษาระดับชั้น ม.6</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">8. ดร.ถนอมศักดิ์ เหล่ากุล</p>
+              <p className="text-sm text-white/80">รองหัวหน้าครูที่ปรึกษาระดับชั้น ม.5</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">9. ดร.สิริหทัย ศรีขวัญใจ</p>
+              <p className="text-sm text-white/80">รองหัวหน้าครูที่ปรึกษาระดับชั้น ม.4</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">10. นางสาวพรทิพย์ พร้อมมูล</p>
+              <p className="text-sm text-white/80">หัวหน้าครูหอพักประจำระดับชั้น ม.6</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">11. นายคมกริช สุนทรา</p>
+              <p className="text-sm text-white/80">หัวหน้าครูหอพักประจำระดับชั้น ม.5</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">12. นายบุญเติม วัฒนพรหม</p>
+              <p className="text-sm text-white/80">หัวหน้าครูหอพักประจำระดับชั้น ม.4</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">13. นางสาวอรวิสาส์ กิจพิทักษ์</p>
+              <p className="text-sm text-white/80">เจ้าหน้าที่งานสุขภาพอนามัย</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">14. นางสาวสิริกร ทองเมืองหลวง</p>
+              <p className="text-sm text-white/80">เจ้าหน้าที่งานสุขภาพอนามัย</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">15. นายสุภัทรชัย ภาสะเตมีย์</p>
+              <p className="text-sm text-white/80">เจ้าหน้าที่งานสุขภาพอนามัย</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">16. นางสาวรัตตินันท์ พัชรวุฒิพันธุ์</p>
+              <p className="text-sm text-white/80">เจ้าหน้าที่งานสุขภาพอนามัย</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">17. นางสาวธารินันท์ สารพัน</p>
+              <p className="text-sm text-white/80">เจ้าหน้าที่งานสุขภาพอนามัย</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">18. นางสาวสุชาวดี บูรณสมภพ</p>
+              <p className="text-sm text-white/80">หัวหน้างานสุขภาพอนามัย (เลขานุการ)</p>
+            </div>
+            
+            <div className="bg-white/5 p-4 rounded-lg">
+              <p className="font-semibold text-yellow-300">19. นายวัชชิรทาน เข็มทอง</p>
+              <p className="text-sm text-white/80">เจ้าหน้าที่งานสุขภาพอนามัย (ผู้ช่วยเลขานุการ)</p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
       {/* Questions Section */}
       <QuestionsSection />
     </div>
