@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
+const TURNSTILE_SECRET_KEY = "x4AAAAAAB3qSXrQVxzNHGool6AGoC45vJ8";
 
 export async function POST(request: NextRequest) {
   try {

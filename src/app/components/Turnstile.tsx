@@ -76,7 +76,7 @@ export default function Turnstile({
 
     // Render new widget
     widgetIdRef.current = window.turnstile.render(containerRef.current, {
-      sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+      sitekey: "0x4AAAAAAB3qSRuU66-hGftU",
       callback: onVerify,
       'error-callback': onError,
       'expired-callback': onExpire,
