@@ -1,6 +1,6 @@
 // lib/api.ts
 import { prisma } from './prisma';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@/generated/prisma/client';
 
 export interface DonationData {
   donorName: string;

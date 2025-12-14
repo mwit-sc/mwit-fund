@@ -34,9 +34,9 @@ export default function DashboardLayout({
 
   return (
     <AdminRoute>
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
         {/* Header */}
-        <div className="py-8 px-4 bg-gradient-to-r from-[#204396] to-[#2a5ac9]">
+        <div className="py-8 px-4 bg-linear-to-r from-[#204396] to-[#2a5ac9]">
           <div className="max-w-7xl mx-auto">
             {/* User Info and Navigation */}
             <div className="flex justify-between items-center mb-6">

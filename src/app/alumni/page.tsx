@@ -204,7 +204,7 @@ export default function AlumniPage() {
 
   if (status === 'loading') {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mx-auto mb-4"></div>
           <p className="text-xl">กำลังโหลดข้อมูล...</p>
@@ -229,9 +229,9 @@ export default function AlumniPage() {
   const generations = [...new Set(alumniProfiles.map(alumni => alumni.generation))].sort();
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
+    <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
       {/* Header */}
-      <div className="py-16 px-4 bg-gradient-to-r from-[#204396] to-[#2a5ac9] text-center">
+      <div className="py-16 px-4 bg-linear-to-r from-[#204396] to-[#2a5ac9] text-center">
         <Link href="/" className="inline-block mb-10">
           <div className="flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -249,7 +249,7 @@ export default function AlumniPage() {
 
       {/* Toggle Buttons */}
       <div className="max-w-6xl mx-auto px-4 -mt-10">
-        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg">
+        <div className="bg-white/10 backdrop-blur-xs rounded-xl p-6 shadow-lg">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => setViewMode('directory')}
@@ -281,7 +281,7 @@ export default function AlumniPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg mb-8"
+            className="bg-white/10 backdrop-blur-xs rounded-xl p-6 shadow-lg mb-8"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -290,7 +290,7 @@ export default function AlumniPage() {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="พิมพ์เพื่อค้นหา..."
                 />
               </div>
@@ -299,7 +299,7 @@ export default function AlumniPage() {
                 <select
                   value={filterGeneration}
                   onChange={(e) => setFilterGeneration(e.target.value)}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 >
                   <option value="">ทุกรุ่น</option>
                   {generations.map(gen => (
@@ -315,7 +315,7 @@ export default function AlumniPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg"
+            className="bg-white/10 backdrop-blur-xs rounded-xl p-6 shadow-lg"
           >
             <h2 className="text-2xl font-bold mb-6">ทะเบียนศิษย์เก่า ({filteredAlumni.length} คน)</h2>
             
@@ -331,7 +331,7 @@ export default function AlumniPage() {
                     key={alumni.id}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-yellow-400/50 transition-all duration-300"
+                    className="bg-white/5 backdrop-blur-xs rounded-lg p-6 border border-white/10 hover:border-yellow-400/50 transition-all duration-300"
                   >
                     <div className="text-center mb-4">
                       {alumni.profile_image_url ? (
@@ -419,7 +419,7 @@ export default function AlumniPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg text-center"
+              className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg text-center"
             >
               <div className="w-16 h-16 bg-yellow-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -436,7 +436,7 @@ export default function AlumniPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg text-center"
+              className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg text-center"
             >
               <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -463,7 +463,7 @@ export default function AlumniPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg"
+              className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg"
             >
               <h2 className="text-2xl font-bold mb-6">ลงทะเบียนศิษย์เก่า</h2>
               
@@ -479,7 +479,7 @@ export default function AlumniPage() {
                       name="firstName"
                       value={alumniData.firstName}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="กรอกชื่อ"
                       required
                     />
@@ -495,7 +495,7 @@ export default function AlumniPage() {
                       name="lastName"
                       value={alumniData.lastName}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="กรอกนามสกุล"
                       required
                     />
@@ -513,7 +513,7 @@ export default function AlumniPage() {
                       name="generation"
                       value={alumniData.generation}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="เช่น 1, 15, 20"
                       required
                     />
@@ -529,7 +529,7 @@ export default function AlumniPage() {
                       name="graduationYear"
                       value={alumniData.graduationYear}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="เช่น 2567"
                       min="2550"
                       max="2600"
@@ -548,7 +548,7 @@ export default function AlumniPage() {
                       name="currentJob"
                       value={alumniData.currentJob}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="เช่น Software Engineer, หมอ, ครู"
                     />
                   </div>
@@ -563,7 +563,7 @@ export default function AlumniPage() {
                       name="company"
                       value={alumniData.company}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="ชื่อบริษัทหรือองค์กร"
                     />
                   </div>
@@ -580,7 +580,7 @@ export default function AlumniPage() {
                       name="contactEmail"
                       value={alumniData.contactEmail}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="อีเมลสำหรับติดต่อ"
                     />
                   </div>
@@ -595,7 +595,7 @@ export default function AlumniPage() {
                       name="phone"
                       value={alumniData.phone}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="เบอร์โทรศัพท์"
                     />
                   </div>
@@ -612,7 +612,7 @@ export default function AlumniPage() {
                       name="lineId"
                       value={alumniData.lineId}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="Line ID"
                     />
                   </div>
@@ -627,7 +627,7 @@ export default function AlumniPage() {
                       name="facebook"
                       value={alumniData.facebook}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="https://facebook.com/..."
                     />
                   </div>
@@ -642,7 +642,7 @@ export default function AlumniPage() {
                       name="linkedin"
                       value={alumniData.linkedin}
                       onChange={handleChange}
-                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                      className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                       placeholder="https://linkedin.com/in/..."
                     />
                   </div>
@@ -658,7 +658,7 @@ export default function AlumniPage() {
                     value={alumniData.address}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                     placeholder="ที่อยู่ปัจจุบัน"
                   />
                 </div>
@@ -673,7 +673,7 @@ export default function AlumniPage() {
                     value={alumniData.skills}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                     placeholder="เช่น Programming, Design, การตลาด, การเงิน"
                   />
                 </div>
@@ -688,7 +688,7 @@ export default function AlumniPage() {
                     value={alumniData.interests}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                     placeholder="สิ่งที่สนใจหรืองานอดิเรก"
                   />
                 </div>
@@ -703,7 +703,7 @@ export default function AlumniPage() {
                     value={alumniData.achievements}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                     placeholder="ผลงานหรือรางวัลที่ภาคภูมิใจ"
                   />
                 </div>
@@ -716,7 +716,7 @@ export default function AlumniPage() {
                     type="file"
                     onChange={handleFileChange}
                     accept="image/*"
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-yellow-400 file:text-[#204396] file:font-semibold hover:file:bg-yellow-300"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-yellow-400 file:text-[#204396] file:font-semibold hover:file:bg-yellow-300"
                   />
                 </div>
 

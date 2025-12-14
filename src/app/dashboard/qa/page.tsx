@@ -189,7 +189,7 @@ export default function QuestionsPage() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6 mb-8"
         >
           <h3 className="text-xl font-bold mb-6">
             {editingQuestion ? 'แก้ไขคำถาม' : 'เพิ่มคำถามใหม่'}
@@ -203,7 +203,7 @@ export default function QuestionsPage() {
                 value={form.question}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 placeholder="ใส่คำถามที่พบบ่อย"
                 required
               />
@@ -216,7 +216,7 @@ export default function QuestionsPage() {
                 value={form.answer}
                 onChange={handleInputChange}
                 rows={5}
-                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 placeholder="ใส่คำตอบที่ชัดเจนและครบถ้วน"
                 required
               />
@@ -230,7 +230,7 @@ export default function QuestionsPage() {
                   name="order"
                   value={form.order}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   min="0"
                 />
               </div>
@@ -242,7 +242,7 @@ export default function QuestionsPage() {
                     name="active"
                     checked={form.active}
                     onChange={handleInputChange}
-                    className="w-4 h-4 text-yellow-400 bg-white/10 border-white/20 rounded focus:ring-yellow-400"
+                    className="w-4 h-4 text-yellow-400 bg-white/10 border-white/20 rounded-sm focus:ring-yellow-400"
                   />
                   <span>แสดงคำถามนี้</span>
                 </label>
@@ -278,7 +278,7 @@ export default function QuestionsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+        className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
       >
         <h3 className="text-xl font-bold mb-6">รายการคำถาม-คำตอบ</h3>
         
@@ -327,13 +327,13 @@ export default function QuestionsPage() {
                 <div className="flex space-x-2 ml-4">
                   <button
                     onClick={() => handleEdit(question)}
-                    className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
+                    className="px-3 py-1 bg-blue-600 text-white text-sm rounded-sm hover:bg-blue-700 transition"
                   >
                     แก้ไข
                   </button>
                   <button
                     onClick={() => handleDelete(question.id)}
-                    className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
+                    className="px-3 py-1 bg-red-600 text-white text-sm rounded-sm hover:bg-red-700 transition"
                   >
                     ลบ
                   </button>

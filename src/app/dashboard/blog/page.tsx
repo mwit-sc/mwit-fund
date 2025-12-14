@@ -202,7 +202,7 @@ export default function BlogManagementPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">📝</div>
@@ -219,7 +219,7 @@ export default function BlogManagementPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">🌟</div>
@@ -236,7 +236,7 @@ export default function BlogManagementPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">✏️</div>
@@ -253,7 +253,7 @@ export default function BlogManagementPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">🖼️</div>
@@ -272,7 +272,7 @@ export default function BlogManagementPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+        className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
       >
         <h3 className="text-xl font-bold mb-6">รายการบทความ</h3>
         
@@ -335,7 +335,7 @@ export default function BlogManagementPage() {
                       <select
                         value={post.status}
                         onChange={(e) => handleStatusChange(post.id, e.target.value as any)}
-                        className="bg-white/10 border border-white/20 rounded px-3 py-1 text-white text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        className="bg-white/10 border border-white/20 rounded-sm px-3 py-1 text-white text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400"
                       >
                         <option value="draft">แบบร่าง</option>
                         <option value="published">เผยแพร่</option>
@@ -365,21 +365,21 @@ export default function BlogManagementPage() {
                         <Link
                           href={`/blog/${post.slug}`}
                           target="_blank"
-                          className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
+                          className="px-3 py-1 bg-blue-600 text-white text-sm rounded-sm hover:bg-blue-700 transition"
                           title="ดูบทความ"
                         >
                           ดู
                         </Link>
                         <Link
                           href={`/dashboard/blog/edit/${post.id}`}
-                          className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition"
+                          className="px-3 py-1 bg-green-600 text-white text-sm rounded-sm hover:bg-green-700 transition"
                           title="แก้ไข"
                         >
                           แก้ไข
                         </Link>
                         <button
                           onClick={() => handleDelete(post.id, post.title)}
-                          className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
+                          className="px-3 py-1 bg-red-600 text-white text-sm rounded-sm hover:bg-red-700 transition"
                           title="ลบ"
                         >
                           ลบ

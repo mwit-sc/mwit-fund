@@ -24,15 +24,15 @@ export default function RootLayout({
         className={`antialiased overflow-x-hidden bg-[#204297] ${ibmPlexSansThai.className}`}
       >
         <SessionProvider>
-          <div className="fixed top-2 lg:top-6 left-1/2 -translate-x-1/2 z-50 text-white w-[calc(100vw-16px)] lg:w-[calc(100vw-48px)] max-w-[1200px] lg:min-h-[80px] px-3 lg:px-6 py-3 lg:py-4 flex justify-between items-center bg-black/40 border-2 border-white/10 rounded-xl backdrop-blur-sm overflow-visible">
+          <div className="fixed top-2 lg:top-6 left-1/2 -translate-x-1/2 z-50 text-white w-[calc(100vw-16px)] lg:w-[calc(100vw-48px)] max-w-[1200px] lg:min-h-[80px] px-3 lg:px-6 py-3 lg:py-4 flex justify-between items-center bg-black/40 border-2 border-white/10 rounded-xl backdrop-blur-xs overflow-visible">
             <Link href="/" className="flex place-items-center flex-1 min-w-0">
-              <img src="/img/alumni.png" alt="สมาคมนักเรียนเก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์" className="h-10 lg:h-12 flex-shrink-0" />
+              <img src="/img/alumni.png" alt="สมาคมนักเรียนเก่าโรงเรียนโรงเรียนมหิดลวิทยานุสรณ์" className="h-10 lg:h-12 shrink-0" />
               <p className="text-sm lg:text-lg pl-3 lg:pl-5 truncate">
                 <span className="hidden sm:inline">สมาคมนักเรียนเก่าโรงเรียนมหิดลวิทยานุสรณ์</span>
                 <span className="sm:hidden">สมาคมนักเรียนเก่า MWIT</span>
               </p>
             </Link>
-            <div className="flex-shrink-0 relative">
+            <div className="shrink-0 relative">
               <Navigation />
             </div>
           </div>

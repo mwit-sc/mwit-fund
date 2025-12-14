@@ -52,7 +52,7 @@ export default function QuestionsPage() {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] ${ibmPlexSansThai.className}`}>
+    <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] ${ibmPlexSansThai.className}`}>
       {/* Hero Section */}
       <section className="pt-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -87,7 +87,7 @@ export default function QuestionsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden border border-white/20"
+                  className="bg-white/10 backdrop-blur-xs rounded-xl overflow-hidden border border-white/20"
                 >
                   <button
                     onClick={() => toggleExpanded(item.id)}
@@ -147,7 +147,7 @@ export default function QuestionsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-white/10 backdrop-blur-sm rounded-xl p-8 text-center border border-white/20"
+              className="bg-white/10 backdrop-blur-xs rounded-xl p-8 text-center border border-white/20"
             >
               <h3 className="text-2xl font-bold text-white mb-4">ไม่พบคำตอบที่ต้องการ?</h3>
               <p className="text-white/80 mb-6">

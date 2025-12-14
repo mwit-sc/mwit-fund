@@ -48,7 +48,7 @@ export default function SignIn() {
   // Show loading while checking session
   if (status === "loading") {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mx-auto mb-4"></div>
           <p className="text-xl">กำลังตรวจสอบสถานะการเข้าสู่ระบบ...</p>
@@ -60,7 +60,7 @@ export default function SignIn() {
   // Don't show sign-in form if user is already logged in (will redirect)
   if (session?.user) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mx-auto mb-4"></div>
           <p className="text-xl">กำลังเปลี่ยนเส้นทาง...</p>
@@ -70,7 +70,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
+    <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
       <div className="max-w-md mx-auto px-4 py-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -90,7 +90,7 @@ export default function SignIn() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg"
         >
           {/* MWIT Logo */}
           <div className="text-center mb-8">
@@ -137,7 +137,7 @@ export default function SignIn() {
           {/* Security Notice */}
           {/* <div className="mt-8 p-4 bg-blue-600/20 rounded-lg border border-blue-400/30">
             <div className="flex items-start space-x-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
               <div>

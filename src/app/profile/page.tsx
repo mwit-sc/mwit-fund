@@ -162,7 +162,7 @@ export default function ProfilePage() {
 
   if (status === 'loading' || loading) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mx-auto mb-4"></div>
           <p className="text-xl">กำลังโหลดข้อมูล...</p>
@@ -173,7 +173,7 @@ export default function ProfilePage() {
 
   if (!session) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">กรุณาเข้าสู่ระบบ</h2>
           <p className="text-lg mb-6">คุณต้องเข้าสู่ระบบเพื่อดูโปรไฟล์</p>
@@ -186,9 +186,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
+    <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
       {/* Header */}
-      <div className="py-16 px-4 bg-gradient-to-r from-[#204396] to-[#2a5ac9] text-center">
+      <div className="py-16 px-4 bg-linear-to-r from-[#204396] to-[#2a5ac9] text-center">
         <Link href="/" className="inline-block mb-10">
           <div className="flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -209,14 +209,14 @@ export default function ProfilePage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg mb-8"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6 shadow-lg mb-8"
         >
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">ข้อมูลบัญชี</h2>
           </div>
           
           <div className="flex items-center space-x-6">
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               {session.user?.image ? (
                 <img
                   src={session.user.image}
@@ -246,7 +246,7 @@ export default function ProfilePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg mb-8"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6 shadow-lg mb-8"
         >
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">ข้อมูลศิษย์เก่า</h2>
@@ -286,7 +286,7 @@ export default function ProfilePage() {
                     name="first_name"
                     value={editData.first_name || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
                 <div>
@@ -296,7 +296,7 @@ export default function ProfilePage() {
                     name="last_name"
                     value={editData.last_name || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
               </div>
@@ -309,7 +309,7 @@ export default function ProfilePage() {
                     name="generation"
                     value={editData.generation || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
                 <div>
@@ -319,7 +319,7 @@ export default function ProfilePage() {
                     name="graduation_year"
                     value={editData.graduation_year || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
               </div>
@@ -332,7 +332,7 @@ export default function ProfilePage() {
                     name="current_job"
                     value={editData.current_job || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
                 <div>
@@ -342,7 +342,7 @@ export default function ProfilePage() {
                     name="company"
                     value={editData.company || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
               </div>
@@ -355,7 +355,7 @@ export default function ProfilePage() {
                     name="contact_email"
                     value={editData.contact_email || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
                 <div>
@@ -365,7 +365,7 @@ export default function ProfilePage() {
                     name="phone"
                     value={editData.phone || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
               </div>
@@ -378,7 +378,7 @@ export default function ProfilePage() {
                     name="line_id"
                     value={editData.line_id || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
                 <div>
@@ -388,7 +388,7 @@ export default function ProfilePage() {
                     name="facebook"
                     value={editData.facebook || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
                 <div>
@@ -398,7 +398,7 @@ export default function ProfilePage() {
                     name="linkedin"
                     value={editData.linkedin || ''}
                     onChange={handleEditChange}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   />
                 </div>
               </div>
@@ -410,7 +410,7 @@ export default function ProfilePage() {
                   value={editData.address || ''}
                   onChange={handleEditChange}
                   rows={3}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 />
               </div>
 
@@ -421,7 +421,7 @@ export default function ProfilePage() {
                   value={editData.skills || ''}
                   onChange={handleEditChange}
                   rows={3}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 />
               </div>
 
@@ -432,7 +432,7 @@ export default function ProfilePage() {
                   value={editData.interests || ''}
                   onChange={handleEditChange}
                   rows={3}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 />
               </div>
 
@@ -443,7 +443,7 @@ export default function ProfilePage() {
                   value={editData.achievements || ''}
                   onChange={handleEditChange}
                   rows={3}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 />
               </div>
 
@@ -527,7 +527,7 @@ export default function ProfilePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6 shadow-lg"
         >
           <h2 className="text-2xl font-bold mb-6">ประวัติการบริจาค</h2>
           
@@ -557,7 +557,7 @@ export default function ProfilePage() {
                           {donation.amount.toLocaleString()} ฿
                         </td>
                         <td className="py-3">
-                          <span className={`px-2 py-1 rounded text-xs ${getStatusColor(donation.status)}`}>
+                          <span className={`px-2 py-1 rounded-sm text-xs ${getStatusColor(donation.status)}`}>
                             {getStatusText(donation.status)}
                           </span>
                         </td>
@@ -579,7 +579,7 @@ export default function ProfilePage() {
                         <h3 className="font-semibold">{donation.donor_name}</h3>
                         <p className="text-sm text-white/70">รุ่น {donation.generation}</p>
                       </div>
-                      <span className={`px-2 py-1 rounded text-xs ${getStatusColor(donation.status)}`}>
+                      <span className={`px-2 py-1 rounded-sm text-xs ${getStatusColor(donation.status)}`}>
                         {getStatusText(donation.status)}
                       </span>
                     </div>

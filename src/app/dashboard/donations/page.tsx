@@ -322,7 +322,7 @@ export default function DonationsPage() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6 mb-8"
         >
           <h3 className="text-xl font-bold mb-6">เพิ่มรายการรายรับ-รายจ่าย</h3>
           
@@ -335,7 +335,7 @@ export default function DonationsPage() {
                   name="title"
                   value={expenseForm.title}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   required
                 />
               </div>
@@ -347,7 +347,7 @@ export default function DonationsPage() {
                   name="amount"
                   value={expenseForm.amount}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   step="0.01"
                   min="0"
                   required
@@ -360,7 +360,7 @@ export default function DonationsPage() {
                   name="expense_type"
                   value={expenseForm.expense_type}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   required
                 >
                   <option value="outcome" className="text-black">รายจ่าย</option>
@@ -375,7 +375,7 @@ export default function DonationsPage() {
                   name="category"
                   value={expenseForm.category}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="เช่น ทุนการศึกษา, ค่าใช้จ่ายดำเนินงาน"
                 />
               </div>
@@ -387,7 +387,7 @@ export default function DonationsPage() {
                   name="academic_year"
                   value={expenseForm.academic_year}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="เช่น 2567"
                   required
                 />
@@ -400,7 +400,7 @@ export default function DonationsPage() {
                   name="expense_date"
                   value={expenseForm.expense_date}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   required
                 />
               </div>
@@ -413,7 +413,7 @@ export default function DonationsPage() {
                 value={expenseForm.description}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 placeholder="รายละเอียดเพิ่มเติม"
               />
             </div>
@@ -447,7 +447,7 @@ export default function DonationsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+        className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
       >
         <h3 className="text-xl font-bold mb-6">รายการการบริจาค</h3>
         
@@ -490,13 +490,13 @@ export default function DonationsPage() {
                     <div className="flex flex-wrap gap-1">
                       <button
                         onClick={() => showDonationDetail(donation)}
-                        className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition"
+                        className="px-3 py-1 bg-blue-600 text-white text-xs rounded-sm hover:bg-blue-700 transition"
                       >
                         รายละเอียด
                       </button>
                       <button
                         onClick={() => openStatusChangeModal(donation)}
-                        className="px-3 py-1 bg-purple-600 text-white text-xs rounded hover:bg-purple-700 transition"
+                        className="px-3 py-1 bg-purple-600 text-white text-xs rounded-sm hover:bg-purple-700 transition"
                       >
                         เปลี่ยนสถานะ
                       </button>
@@ -504,13 +504,13 @@ export default function DonationsPage() {
                         <>
                           <button
                             onClick={() => updateDonationStatus(donation.id, 'approved')}
-                            className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700 transition"
+                            className="px-3 py-1 bg-green-600 text-white text-xs rounded-sm hover:bg-green-700 transition"
                           >
                             อนุมัติ
                           </button>
                           <button
                             onClick={() => updateDonationStatus(donation.id, 'rejected')}
-                            className="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700 transition"
+                            className="px-3 py-1 bg-red-600 text-white text-xs rounded-sm hover:bg-red-700 transition"
                           >
                             ปฏิเสธ
                           </button>
@@ -534,7 +534,7 @@ export default function DonationsPage() {
 
       {/* Donation Detail Modal */}
       {showDetailModal && selectedDonation && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -669,7 +669,7 @@ export default function DonationsPage() {
 
       {/* Status Change Modal */}
       {showStatusChangeModal && statusChangeData.donation && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -699,7 +699,7 @@ export default function DonationsPage() {
                 <select
                   value={statusChangeData.newStatus}
                   onChange={(e) => setStatusChangeData(prev => ({ ...prev, newStatus: e.target.value as 'pending' | 'approved' | 'rejected' }))}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="pending">รอดำเนินการ</option>
                   <option value="approved">อนุมัติ</option>

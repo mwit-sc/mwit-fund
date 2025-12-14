@@ -70,7 +70,7 @@ export default function DashboardOverview() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">💰</div>
@@ -90,7 +90,7 @@ export default function DashboardOverview() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">⏳</div>
@@ -110,7 +110,7 @@ export default function DashboardOverview() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">💬</div>
@@ -130,7 +130,7 @@ export default function DashboardOverview() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">📊</div>
@@ -152,7 +152,7 @@ export default function DashboardOverview() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+        className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
       >
         <h3 className="text-xl font-bold mb-6">การดำเนินการด่วน</h3>
         

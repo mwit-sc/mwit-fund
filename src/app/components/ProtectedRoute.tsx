@@ -30,7 +30,7 @@ export default function ProtectedRoute({ children }: Props) {
 
   if (status === "loading") {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mx-auto mb-4"></div>
           <p className="text-xl">กำลังตรวจสอบการเข้าสู่ระบบ...</p>

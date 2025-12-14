@@ -115,7 +115,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] ${ibmPlexSansThai.className}`}>
+    <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] ${ibmPlexSansThai.className}`}>
       {/* Hero Section */}
       <div className="relative h-screen">
         <div 
@@ -135,7 +135,7 @@ export default function Home() {
             <img 
               src="/img/alumni.png" 
               alt="MWIT Alumni Logo" 
-              className="rounded w-32 h-32 md:w-40 md:h-40 mb-6" 
+              className="rounded-sm w-32 h-32 md:w-40 md:h-40 mb-6" 
             />
           </motion.div>
           
@@ -168,7 +168,7 @@ export default function Home() {
               </div>
             </Link>
             <Link href="#about">
-              <div className="px-8 py-3 bg-white/20 text-white font-bold rounded-full text-lg hover:bg-white/30 transition duration-300 backdrop-blur-sm">
+              <div className="px-8 py-3 bg-white/20 text-white font-bold rounded-full text-lg hover:bg-white/30 transition duration-300 backdrop-blur-xs">
                 เกี่ยวกับสมาคม
               </div>
             </Link>
@@ -288,7 +288,7 @@ export default function Home() {
       </div>
 
       {/* Donation CTA */}
-      <div className="py-20 px-4 md:px-8 bg-gradient-to-r from-[#204396] to-[#2a5ac9]">
+      <div className="py-20 px-4 md:px-8 bg-linear-to-r from-[#204396] to-[#2a5ac9]">
         <div className="max-w-4xl mx-auto text-center text-white">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -415,7 +415,7 @@ export default function Home() {
                     value={messageForm.name}
                     onChange={handleInputChange}
                     disabled={isSubmitting}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
                     placeholder="กรอกชื่อ-นามสกุล" 
                     required
                   />
@@ -430,7 +430,7 @@ export default function Home() {
                     value={messageForm.email}
                     onChange={handleInputChange}
                     disabled={isSubmitting}
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
                     placeholder="กรอกอีเมล" 
                     required
                   />
@@ -445,7 +445,7 @@ export default function Home() {
                     onChange={handleInputChange}
                     disabled={isSubmitting}
                     rows={4} 
-                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
+                    className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 disabled:opacity-50"
                     placeholder="กรอกข้อความ"
                     required
                   ></textarea>

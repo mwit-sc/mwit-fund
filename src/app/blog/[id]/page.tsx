@@ -114,7 +114,7 @@ export default function BlogPostPage() {
     });
   };
 
-  const containerClass = "min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white " + ibmPlexSansThai.className;
+  const containerClass = "min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white " + ibmPlexSansThai.className;
 
   if (loading) {
     return (
@@ -222,7 +222,7 @@ export default function BlogPostPage() {
 
           {/* Excerpt */}
           {post.excerpt && (
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
+            <div className="bg-white/10 backdrop-blur-xs rounded-xl p-6 mb-8">
               <p className="text-lg text-white/90 leading-relaxed">
                 {post.excerpt}
               </p>

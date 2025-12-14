@@ -120,7 +120,7 @@ export default function MessagesPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+        className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
       >
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold">รายการข้อความ</h3>
@@ -187,7 +187,7 @@ export default function MessagesPage() {
                   <td className="py-3">
                     <button
                       onClick={() => showMessageDetail(message)}
-                      className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition"
+                      className="px-3 py-1 bg-blue-600 text-white text-xs rounded-sm hover:bg-blue-700 transition"
                     >
                       อ่านข้อความ
                     </button>
@@ -208,7 +208,7 @@ export default function MessagesPage() {
 
       {/* Message Detail Modal */}
       {showMessageModal && selectedMessage && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -295,7 +295,7 @@ export default function MessagesPage() {
                         value={noteText}
                         onChange={(e) => setNoteText(e.target.value)}
                         rows={4}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-gray-900 bg-white"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-blue-500 resize-none text-gray-900 bg-white"
                         placeholder="เพิ่มโน้ตสำหรับการติดตาม หรือข้อมูลเพิ่มเติม..."
                       />
                       <div className="flex space-x-2">

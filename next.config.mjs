@@ -9,13 +9,7 @@ const nextConfig = {
     // Allow build to complete even with type errors in production
     ignoreBuildErrors: process.env.NODE_ENV === 'production',
   },
-  
-  // ESLint configuration
-  eslint: {
-    // Allow build to complete even with ESLint errors in production
-    ignoreDuringBuilds: process.env.NODE_ENV === 'production',
-  },
-  
+
   // Server external packages (moved from experimental)
   serverExternalPackages: ['pg', '@aws-sdk/client-s3'],
   

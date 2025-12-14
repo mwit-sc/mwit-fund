@@ -68,7 +68,7 @@ export default function MyDonationsPage() {
 
   if (status === 'loading' || loading) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mx-auto mb-4"></div>
           <p className="text-xl">กำลังโหลดข้อมูล...</p>
@@ -79,7 +79,7 @@ export default function MyDonationsPage() {
 
   if (!session) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">กรุณาเข้าสู่ระบบ</h2>
           <p className="text-lg mb-6">คุณต้องเข้าสู่ระบบเพื่อดูประวัติการบริจาค</p>
@@ -93,9 +93,9 @@ export default function MyDonationsPage() {
 
   return (
     <>
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
         {/* Header */}
-        <div className="pt-8 px-4 bg-gradient-to-r from-[#204396] to-[#2a5ac9] text-center">
+        <div className="pt-8 px-4 bg-linear-to-r from-[#204396] to-[#2a5ac9] text-center">
           {/* User Info and Logout - Mobile Responsive */}
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-10 max-w-7xl mx-auto space-y-4 lg:space-y-0">
             {/* Navigation Links */}
@@ -117,7 +117,7 @@ export default function MyDonationsPage() {
 
             {/* User Profile Section */}
             {session?.user && (
-              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 bg-white/10 p-4 rounded-lg backdrop-blur-sm">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 bg-white/10 p-4 rounded-lg backdrop-blur-xs">
                 <div className="flex items-center space-x-3">
                   <Avatar 
                     src={session.user.image} 
@@ -131,7 +131,7 @@ export default function MyDonationsPage() {
                 </div>
                 <button
                   onClick={() => signOut({ callbackUrl: '/' })}
-                  className="px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition duration-300 flex items-center space-x-2 text-sm lg:text-base flex-shrink-0"
+                  className="px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition duration-300 flex items-center space-x-2 text-sm lg:text-base shrink-0"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -154,7 +154,7 @@ export default function MyDonationsPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+            className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
           >
             <h2 className="text-xl sm:text-2xl font-bold mb-6">ประวัติการบริจาค</h2>
             
@@ -185,7 +185,7 @@ export default function MyDonationsPage() {
                             {donation.amount.toLocaleString()} ฿
                           </td>
                           <td className="py-3">
-                            <span className={`px-2 py-1 rounded text-xs ${getStatusColor(donation.status)}`}>
+                            <span className={`px-2 py-1 rounded-sm text-xs ${getStatusColor(donation.status)}`}>
                               {getStatusText(donation.status)}
                             </span>
                           </td>
@@ -212,7 +212,7 @@ export default function MyDonationsPage() {
                           <h3 className="font-semibold text-base">{donation.donor_name}</h3>
                           <p className="text-sm text-white/70">รุ่น {donation.generation}</p>
                         </div>
-                        <span className={`px-2 py-1 rounded text-xs ${getStatusColor(donation.status)}`}>
+                        <span className={`px-2 py-1 rounded-sm text-xs ${getStatusColor(donation.status)}`}>
                           {getStatusText(donation.status)}
                         </span>
                       </div>
@@ -269,7 +269,7 @@ export default function MyDonationsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="mt-8 bg-white/10 backdrop-blur-sm rounded-xl p-6"
+              className="mt-8 bg-white/10 backdrop-blur-xs rounded-xl p-6"
             >
               <h2 className="text-xl sm:text-2xl font-bold mb-6">สรุปการบริจาค</h2>
               

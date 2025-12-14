@@ -198,7 +198,7 @@ export default function ShortLinksPage() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6 mb-8"
         >
           <h3 className="text-xl font-bold mb-6">สร้างลิงก์สั้นใหม่</h3>
           <form onSubmit={handleCreateShortLink} className="space-y-4">
@@ -211,7 +211,7 @@ export default function ShortLinksPage() {
                   type="url"
                   value={formData.target_url}
                   onChange={(e) => setFormData(prev => ({ ...prev, target_url: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-hidden focus:ring-2 focus:ring-yellow-400"
                   placeholder="https://example.com"
                   required
                 />
@@ -224,7 +224,7 @@ export default function ShortLinksPage() {
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-hidden focus:ring-2 focus:ring-yellow-400"
                   placeholder="ชื่อเรื่องของลิงก์"
                 />
               </div>
@@ -236,7 +236,7 @@ export default function ShortLinksPage() {
                   type="text"
                   value={formData.short_code}
                   onChange={(e) => setFormData(prev => ({ ...prev, short_code: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-hidden focus:ring-2 focus:ring-yellow-400"
                   placeholder="abc123"
                 />
               </div>
@@ -248,7 +248,7 @@ export default function ShortLinksPage() {
                   type="datetime-local"
                   value={formData.expires_at}
                   onChange={(e) => setFormData(prev => ({ ...prev, expires_at: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-hidden focus:ring-2 focus:ring-yellow-400"
                 />
               </div>
             </div>
@@ -279,7 +279,7 @@ export default function ShortLinksPage() {
           <p className="text-xl">กำลังโหลด...</p>
         </div>
       ) : (
-        <div className="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden">
+        <div className="bg-white/10 backdrop-blur-xs rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-white/5">

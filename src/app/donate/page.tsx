@@ -80,7 +80,7 @@ function QuestionsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg"
         >
           <div className="text-center mb-2">
             <h2 className="text-2xl font-bold mb-4">คำถามที่พบบ่อย</h2>
@@ -94,7 +94,7 @@ function QuestionsSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white/5 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10"
+                className="bg-white/5 backdrop-blur-xs rounded-lg overflow-hidden border border-white/10"
               >
                 <button
                   onClick={() => toggleExpanded(item.id)}
@@ -401,9 +401,9 @@ export default function DonatePage() {
 
   return (
     <div>
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white pb-20 ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white pb-20 ${ibmPlexSansThai.className}`}>
       {/* Header */}
-      <div className="py-16 px-4 bg-gradient-to-r from-[#204396] to-[#2a5ac9] text-center">
+      <div className="py-16 px-4 bg-linear-to-r from-[#204396] to-[#2a5ac9] text-center">
         <Link href="/" className="inline-block mb-10">
           <div className="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -422,7 +422,7 @@ export default function DonatePage() {
       
       {/* Progress Tracker */}
       <div className="max-w-6xl mx-auto px-4 -mt-10">
-        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg">
+        <div className="bg-white/10 backdrop-blur-xs rounded-xl p-6 shadow-lg">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <h3 className="text-xl font-bold text-yellow-400">เป้าหมายการระดมทุน</h3>
@@ -443,7 +443,7 @@ export default function DonatePage() {
           <div className="mt-6">
             <div className="h-4 bg-white/20 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full"
+                className="h-full bg-linear-to-r from-yellow-400 to-yellow-500 rounded-full"
                 style={{ width: `${progressPercentage}%` }}
               ></div>
             </div>
@@ -489,7 +489,7 @@ export default function DonatePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg max-w-3xl mx-auto"
+            className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg max-w-3xl mx-auto"
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">ข้อมูลผู้บริจาค</h2>
@@ -518,7 +518,7 @@ export default function DonatePage() {
                   name="donorName"
                   value={donationData.donorName}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="กรอกชื่อ-นามสกุล" 
                   required
                 />
@@ -534,7 +534,7 @@ export default function DonatePage() {
                   name="generation"
                   value={donationData.generation}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="เช่น รุ่น 1, รุ่น 15" 
                   required
                 />
@@ -550,7 +550,7 @@ export default function DonatePage() {
                   name="amount"
                   value={donationData.amount}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="ระบุจำนวนเงิน" 
                   min="1"
                 />
@@ -566,7 +566,7 @@ export default function DonatePage() {
                   name="receiptName"
                   value={donationData.receiptName}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="กรอกชื่อที่ต้องการให้ปรากฏในใบเสร็จ" 
                 />
               </div>
@@ -581,7 +581,7 @@ export default function DonatePage() {
                   name="email"
                   value={donationData.email}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="กรอกอีเมล" 
                 />
               </div>
@@ -596,7 +596,7 @@ export default function DonatePage() {
                   name="taxId"
                   value={donationData.taxId}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="กรอกเลขประจำตัวผู้เสียภาษี" 
                 />
               </div>
@@ -611,7 +611,7 @@ export default function DonatePage() {
                   value={donationData.address}
                   onChange={handleChange}
                   rows={3}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="กรอกที่อยู่สำหรับจัดส่งเอกสาร" 
                 />
               </div>
@@ -626,7 +626,7 @@ export default function DonatePage() {
                   name="contactInfo"
                   value={donationData.contactInfo}
                   onChange={handleChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   placeholder="กรอก Line ID หรือเบอร์โทรศัพท์" 
                   required
                 />
@@ -702,7 +702,7 @@ export default function DonatePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg max-w-3xl mx-auto"
+            className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg max-w-3xl mx-auto"
           >
             <h2 className="text-2xl font-bold mb-6">อัพโหลดหลักฐานการโอนเงิน</h2>
             
@@ -815,7 +815,7 @@ export default function DonatePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg max-w-3xl mx-auto text-center"
+            className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg max-w-3xl mx-auto text-center"
           >
             <div className="mb-6">
               <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto">
@@ -852,7 +852,7 @@ export default function DonatePage() {
       
       {/* Donation Info */}
       <div className="max-w-6xl mx-auto mt-20 px-4">
-        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg">
+        <div className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg">
           <h2 className="text-2xl font-bold mb-6 text-center">รายละเอียดกองทุนแบ่งสรรปันน้อง</h2>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -913,7 +913,7 @@ export default function DonatePage() {
 
       {/* Login Popup */}
       {showLoginPopup && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -978,7 +978,7 @@ export default function DonatePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-lg"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-8 shadow-lg"
         >
           <h2 className="text-2xl font-bold mb-6 text-center text-yellow-400">คณะกรรมการพิจารณาทุน</h2>
           

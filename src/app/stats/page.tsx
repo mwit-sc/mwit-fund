@@ -227,7 +227,7 @@ export default function StatsPage() {
 
   if (loading) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
+      <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white flex items-center justify-center ${ibmPlexSansThai.className}`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mx-auto mb-4"></div>
           <p className="text-xl">กำลังโหลดข้อมูล...</p>
@@ -237,9 +237,9 @@ export default function StatsPage() {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
+    <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
       {/* Header */}
-      <div className="py-16 px-4 bg-gradient-to-r from-[#204396] to-[#2a5ac9] text-center">
+      <div className="py-16 px-4 bg-linear-to-r from-[#204396] to-[#2a5ac9] text-center">
         <Link href="/" className="inline-block mb-10">
           <div className="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -260,13 +260,13 @@ export default function StatsPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <label className="block text-lg font-semibold mb-4">เลือกปีการศึกษา:</label>
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            className="bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white focus:outline-hidden focus:ring-2 focus:ring-yellow-400"
           >
             {yearlyStats.map(stat => (
               <option key={stat.academic_year} value={stat.academic_year} className="text-black">
@@ -284,19 +284,19 @@ export default function StatsPage() {
             transition={{ delay: 0.1 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-xl p-6 text-center">
+            <div className="bg-linear-to-br from-green-600 to-green-700 rounded-xl p-6 text-center">
               <h3 className="text-lg font-semibold mb-2">ยอดบริจาครวม</h3>
               <p className="text-3xl font-bold">{currentYearData.total_donations.toLocaleString()} ฿</p>
             </div>
-            <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-xl p-6 text-center">
+            <div className="bg-linear-to-br from-red-600 to-red-700 rounded-xl p-6 text-center">
               <h3 className="text-lg font-semibold mb-2">รายจ่ายรวม</h3>
               <p className="text-3xl font-bold">{currentYearData.total_expenses.toLocaleString()} ฿</p>
             </div>
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 text-center">
+            <div className="bg-linear-to-br from-blue-600 to-blue-700 rounded-xl p-6 text-center">
               <h3 className="text-lg font-semibold mb-2">ยอดคงเหลือ</h3>
               <p className="text-3xl font-bold">{currentYearData.balance.toLocaleString()} ฿</p>
             </div>
-            <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-6 text-center">
+            <div className="bg-linear-to-br from-purple-600 to-purple-700 rounded-xl p-6 text-center">
               <h3 className="text-lg font-semibold mb-2">จำนวนผู้บริจาค</h3>
               <p className="text-3xl font-bold">{currentYearData.donor_count} คน</p>
             </div>
@@ -310,7 +310,7 @@ export default function StatsPage() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+            className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
           >
             <Bar data={generationChartData} options={generationChartOptions} />
           </motion.div>
@@ -320,7 +320,7 @@ export default function StatsPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+            className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
           >
             <h3 className="text-xl font-bold mb-4 text-center">รายรับ-รายจ่าย ปี {selectedYear}</h3>
             <Doughnut 
@@ -348,7 +348,7 @@ export default function StatsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <h3 className="text-xl font-bold mb-4">แนวโน้มตลอดปีการศึกษา</h3>
           <Line 
@@ -396,7 +396,7 @@ export default function StatsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           
           <div className="overflow-x-auto">

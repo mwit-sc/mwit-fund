@@ -84,7 +84,7 @@ export default function RichTextEditor({
         <button
           type="button"
           onClick={handleBold}
-          className="px-3 py-2 bg-white/10 text-white rounded hover:bg-white/20 transition font-bold"
+          className="px-3 py-2 bg-white/10 text-white rounded-sm hover:bg-white/20 transition font-bold"
           title="Bold (Ctrl+B) - ใช้ **text**"
         >
           B
@@ -92,7 +92,7 @@ export default function RichTextEditor({
         <button
           type="button"
           onClick={handleItalic}
-          className="px-3 py-2 bg-white/10 text-white rounded hover:bg-white/20 transition italic"
+          className="px-3 py-2 bg-white/10 text-white rounded-sm hover:bg-white/20 transition italic"
           title="Italic (Ctrl+I) - ใช้ *text*"
         >
           I
@@ -100,7 +100,7 @@ export default function RichTextEditor({
         <button
           type="button"
           onClick={handleUnderline}
-          className="px-3 py-2 bg-white/10 text-white rounded hover:bg-white/20 transition underline"
+          className="px-3 py-2 bg-white/10 text-white rounded-sm hover:bg-white/20 transition underline"
           title="Underline (Ctrl+U) - ใช้ __text__"
         >
           U
@@ -129,7 +129,7 @@ export default function RichTextEditor({
         onKeyDown={handleKeyDown}
         rows={rows}
         placeholder={placeholder}
-        className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-mono text-sm ${className}`}
+        className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-mono text-sm ${className}`}
         style={{ 
           tabSize: 4,
           whiteSpace: 'pre-wrap'

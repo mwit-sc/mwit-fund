@@ -212,7 +212,7 @@ export default function ContentPage() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6 mb-8"
         >
           <h3 className="text-xl font-bold mb-6">
             {editingContent ? 'แก้ไขเนื้อหา' : 'เพิ่มเนื้อหาใหม่'}
@@ -226,7 +226,7 @@ export default function ContentPage() {
                   name="section"
                   value={form.section}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   required
                 >
                   {SECTION_OPTIONS.map(option => (
@@ -244,7 +244,7 @@ export default function ContentPage() {
                   name="order"
                   value={form.order}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                  className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                   min="0"
                 />
               </div>
@@ -257,7 +257,7 @@ export default function ContentPage() {
                 name="title"
                 value={form.title}
                 onChange={handleInputChange}
-                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 placeholder="หัวข้อของเนื้อหา"
               />
             </div>
@@ -269,7 +269,7 @@ export default function ContentPage() {
                 value={form.content}
                 onChange={handleInputChange}
                 rows={5}
-                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 placeholder="เนื้อหาที่จะแสดง"
               />
             </div>
@@ -281,7 +281,7 @@ export default function ContentPage() {
                 name="image_url"
                 value={form.image_url}
                 onChange={handleInputChange}
-                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-white"
+                className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white"
                 placeholder="https://example.com/image.jpg"
               />
             </div>
@@ -293,7 +293,7 @@ export default function ContentPage() {
                   name="active"
                   checked={form.active}
                   onChange={handleInputChange}
-                  className="w-4 h-4 text-yellow-400 bg-white/10 border-white/20 rounded focus:ring-yellow-400"
+                  className="w-4 h-4 text-yellow-400 bg-white/10 border-white/20 rounded-sm focus:ring-yellow-400"
                 />
                 <span>แสดงเนื้อหานี้</span>
               </label>
@@ -328,7 +328,7 @@ export default function ContentPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+        className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
       >
         <h3 className="text-xl font-bold mb-6">รายการเนื้อหา</h3>
         
@@ -378,13 +378,13 @@ export default function ContentPage() {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleEdit(content)}
-                    className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
+                    className="px-3 py-1 bg-blue-600 text-white text-sm rounded-sm hover:bg-blue-700 transition"
                   >
                     แก้ไข
                   </button>
                   <button
                     onClick={() => handleDelete(content.id)}
-                    className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
+                    className="px-3 py-1 bg-red-600 text-white text-sm rounded-sm hover:bg-red-700 transition"
                   >
                     ลบ
                   </button>

@@ -134,7 +134,7 @@ export default function UsersPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">👥</div>
@@ -151,7 +151,7 @@ export default function UsersPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">👑</div>
@@ -168,7 +168,7 @@ export default function UsersPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="text-3xl">👤</div>
@@ -187,7 +187,7 @@ export default function UsersPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+        className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
       >
         <h3 className="text-xl font-bold mb-6">รายชื่อผู้ใช้</h3>
         
@@ -234,7 +234,7 @@ export default function UsersPage() {
                       value={user.role}
                       onChange={(e) => handleRoleChange(user.id, e.target.value as 'user' | 'admin')}
                       disabled={updatingUserId === user.id}
-                      className="bg-white/10 border border-white/20 rounded px-3 py-1 text-white text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                      className="bg-white/10 border border-white/20 rounded-sm px-3 py-1 text-white text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400"
                     >
                       <option value="user">ผู้ใช้ทั่วไป</option>
                       <option value="admin">ผู้ดูแลระบบ</option>
@@ -248,7 +248,7 @@ export default function UsersPage() {
                   <td className="py-4 px-4 text-right">
                     <button
                       onClick={() => handleDeleteUser(user.id, user.name)}
-                      className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
+                      className="px-3 py-1 bg-red-600 text-white text-sm rounded-sm hover:bg-red-700 transition"
                       disabled={updatingUserId === user.id}
                     >
                       ลบ

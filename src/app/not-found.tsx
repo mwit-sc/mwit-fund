@@ -12,7 +12,7 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
 
 export default function NotFound() {
   return (
-    <div className={`max-h-screen min-h-screen bg-gradient-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
+    <div className={`max-h-screen min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] text-white ${ibmPlexSansThai.className}`}>
       <div className="flex flex-col items-center justify-center min-h-screen px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -27,7 +27,7 @@ export default function NotFound() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-8"
           >
-            <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-bold text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text leading-none">
+            <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-bold text-transparent bg-linear-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text leading-none">
               404
             </h1>
           </motion.div> */}
@@ -73,7 +73,7 @@ export default function NotFound() {
           >
             <Link
               href="/"
-              className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#204396] font-bold rounded-xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="px-8 py-4 bg-linear-to-r from-yellow-400 to-yellow-500 text-[#204396] font-bold rounded-xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               <div className="flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,7 +85,7 @@ export default function NotFound() {
 
             <Link
               href="/donate"
-              className="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white font-medium rounded-xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
+              className="px-8 py-4 bg-white/10 backdrop-blur-xs border-2 border-white/20 text-white font-medium rounded-xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
             >
               <div className="flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

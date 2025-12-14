@@ -221,7 +221,7 @@ export default function EditBlogPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <h3 className="text-xl font-bold mb-6">ข้อมูลพื้นฐาน</h3>
           
@@ -235,7 +235,7 @@ export default function EditBlogPage() {
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                 placeholder="ใส่หัวข้อบทความ..."
                 required
               />
@@ -250,7 +250,7 @@ export default function EditBlogPage() {
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
                 rows={3}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
                 placeholder="สรุปเนื้อหาของบทความในบางบรรทัด..."
               />
             </div>
@@ -263,7 +263,7 @@ export default function EditBlogPage() {
                 id="status"
                 value={status}
                 onChange={(e) => setStatus(e.target.value as 'draft' | 'published' | 'archived')}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
               >
                 <option value="draft">แบบร่าง</option>
                 <option value="published">เผยแพร่</option>
@@ -278,7 +278,7 @@ export default function EditBlogPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <h3 className="text-xl font-bold mb-6">รูปปก</h3>
           
@@ -330,7 +330,7 @@ export default function EditBlogPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <h3 className="text-xl font-bold mb-6">เนื้อหา</h3>
           
@@ -351,7 +351,7 @@ export default function EditBlogPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white/10 backdrop-blur-sm rounded-xl p-6"
+          className="bg-white/10 backdrop-blur-xs rounded-xl p-6"
         >
           <h3 className="text-xl font-bold mb-6">รูปภาพประกอบ</h3>
           
@@ -392,7 +392,7 @@ export default function EditBlogPage() {
                         <button
                           type="button"
                           onClick={() => moveImage(index, index - 1)}
-                          className="p-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                          className="p-1 bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition"
                           title="ย้ายขึ้น"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -404,7 +404,7 @@ export default function EditBlogPage() {
                         <button
                           type="button"
                           onClick={() => moveImage(index, index + 1)}
-                          className="p-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                          className="p-1 bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition"
                           title="ย้ายลง"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -415,7 +415,7 @@ export default function EditBlogPage() {
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
-                        className="p-1 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                        className="p-1 bg-red-600 text-white rounded-sm hover:bg-red-700 transition"
                         title="ลบ"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
