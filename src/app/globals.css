@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap')
-layer(base);
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
 @import 'tailwindcss';
 
@@ -52,7 +51,7 @@ html {
 body {
   color: var(--foreground);
   background: #204297;
-  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-family: 'IBM Plex Sans Thai', 'Noto Color Emoji', sans-serif;
   margin: 0;
   padding: 0;
   width: 100%;
