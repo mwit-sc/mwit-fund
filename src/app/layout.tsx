@@ -37,7 +37,7 @@ export default function RootLayout({
             </div>
           </div>
           <div className="mb-20 lg:mb-28"></div>
-          <div className="text-white   lg:mx-15">{children}</div>
+          <div className="text-white">{children}</div>
         </SessionProvider>
         <Toaster 
           position="top-right"

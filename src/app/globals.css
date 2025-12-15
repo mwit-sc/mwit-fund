@@ -38,15 +38,25 @@ layer(base);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'IBM Plex Sans Thai', sans-serif;
-}
-
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
+  background: #204297;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: #204297;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
 /* Offset for fixed navigation */
