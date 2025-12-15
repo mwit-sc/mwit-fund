@@ -117,7 +117,7 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-linear-to-b from-[#204396] to-[#152a5f] ${ibmPlexSansThai.className}`}>
       {/* Hero Section */}
-      <div className="relative h-screen">
+      <div className="relative h-dvh">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0" 
           style={{ 
@@ -126,7 +126,7 @@ export default function Home() {
           }}
         />
         
-        <div className="relative z-10 flex flex-col items-center justify-center p-5 text-white px-4 text-center">
+        <div className="relative z-10 h-full flex flex-col items-center justify-center p-5 text-white px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -173,7 +173,7 @@ export default function Home() {
               </div>
             </Link>
           </motion.div>
-          <div className="pt-8 bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+          <div className="pt-8">
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
